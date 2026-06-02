@@ -66,3 +66,4 @@ sector
 timer
 alias
 domino
+rotation
