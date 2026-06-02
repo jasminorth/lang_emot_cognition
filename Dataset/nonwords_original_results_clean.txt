@@ -56907,6 +56907,3 @@ yermed          j3md            6
 ghouch          g6J             6         
 knasks          n{sks           6         
 phrepths        frEpTs          8         
-
-ARC Nonword Database found 56909 words
-Search results generated 01:27:30 01/06/2026
