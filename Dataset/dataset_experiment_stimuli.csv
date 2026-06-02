@@ -1,6 +1,5 @@
 Experiment;Item_type;Stimulus;Condition;Cognate_status;Length;Lg10SUBTLEX_US;correct_response
 LDT;exp;dustpan;word;noncognate;7;1.146128035678238;j
-LDT;exp;ennui;word;noncognate;5;1.3010299956639813;j
 LDT;exp;adjuster;word;noncognate;8;1.3222192947339193;j
 LDT;exp;fallacy;word;noncognate;7;1.3222192947339193;j
 LDT;exp;finality;word;noncognate;8;1.3222192947339193;j
@@ -10,17 +9,18 @@ LDT;exp;gusher;word;noncognate;6;1.3222192947339193;j
 LDT;exp;henhouse;word;noncognate;8;1.3222192947339193;j
 LDT;exp;huntress;word;noncognate;8;1.3222192947339193;j
 LDT;exp;modicum;word;noncognate;7;1.3222192947339193;j
+LDT;exp;omission;word;noncognate;8;1.3222192947339193;j
 LDT;exp;catnip;word;noncognate;6;1.3424226808222062;j
 LDT;exp;benzene;word;noncognate;7;1.3617278360175928;j
 LDT;exp;busload;word;noncognate;7;1.3979400086720377;j
 LDT;exp;analyzer;word;noncognate;8;1.4313637641589874;j
-LDT;exp;linoleum;word;noncognate;8;1.4471580313422192;j
+LDT;exp;rectory;word;noncognate;7;1.4471580313422192;j
 LDT;exp;backdoor;word;noncognate;8;1.4913616938342726;j
 LDT;exp;castaway;word;noncognate;8;1.5185139398778875;j
 LDT;exp;gasket;word;noncognate;6;1.5440680443502757;j
-LDT;exp;placebo;word;noncognate;7;1.5797835966168101;j
+LDT;exp;rampart;word;noncognate;7;1.5797835966168101;j
 LDT;exp;briar;word;noncognate;5;1.6020599913279623;j
-LDT;exp;porridge;word;noncognate;8;1.6334684555795864;j
+LDT;exp;damper;word;noncognate;6;1.6434526764861874;j
 LDT;exp;burro;word;noncognate;5;1.6720978579357175;j
 LDT;exp;vixen;word;noncognate;5;1.6989700043360187;j
 LDT;exp;blaster;word;noncognate;7;1.724275869600789;j
@@ -40,7 +40,7 @@ LDT;exp;juror;word;noncognate;5;2.12057393120585;j
 LDT;exp;squid;word;noncognate;5;2.1522883443830563;j
 LDT;exp;hustler;word;noncognate;7;2.1818435879447726;j
 LDT;exp;ruler;word;noncognate;5;2.2121876044039577;j
-LDT;exp;flyer;word;noncognate;5;2.2405492482826;j
+LDT;exp;fortress;word;noncognate;8;2.2380461031287955;j
 LDT;exp;gator;word;noncognate;5;2.2671717284030137;j
 LDT;exp;bladder;word;noncognate;7;2.307496037913213;j
 LDT;exp;vanity;word;noncognate;6;2.3242824552976926;j
@@ -50,13 +50,13 @@ LDT;exp;torch;word;noncognate;5;2.406540180433955;j
 LDT;exp;exposure;word;noncognate;8;2.4653828514484184;j
 LDT;exp;brake;word;noncognate;5;2.48572142648158;j
 LDT;exp;gasoline;word;noncognate;8;2.5237464668115646;j
-LDT;exp;teenager;word;noncognate;8;2.546542663478131;j
+LDT;exp;shovel;word;noncognate;6;2.5440680443502757;j
 LDT;exp;panel;word;noncognate;5;2.571708831808688;j
 LDT;exp;disguise;word;noncognate;8;2.6009728956867484;j
-LDT;exp;cannon;word;noncognate;6;2.6483600109809315;j
 LDT;exp;storage;word;noncognate;7;2.656098202012832;j
 LDT;exp;brick;word;noncognate;5;2.716003343634799;j
 LDT;exp;barrel;word;noncognate;6;2.734799829588847;j
+LDT;exp;verdict;word;noncognate;7;2.747411807886423;j
 LDT;exp;bureau;word;noncognate;6;2.7551122663950713;j
 LDT;exp;entry;word;noncognate;5;2.79309160017658;j
 LDT;exp;stroke;word;noncognate;6;2.824776462475546;j
@@ -82,12 +82,10 @@ LDT;exp;sucker;word;noncognate;6;2.921686475483602;j
 LDT;exp;alley;word;noncognate;5;2.920123326290724;j
 LDT;exp;election;word;noncognate;8;2.7489628612561616;j
 LDT;exp;column;word;noncognate;6;2.7481880270062002;j
-LDT;exp;verdict;word;noncognate;7;2.747411807886423;j
 LDT;exp;platoon;word;noncognate;7;2.56702636615906;j
 LDT;exp;bounty;word;noncognate;6;2.5646660642520893;j
 LDT;exp;sector;word;noncognate;6;2.5575072019056577;j
 LDT;exp;pursuit;word;noncognate;7;2.5563025007672873;j
-LDT;exp;shovel;word;noncognate;6;2.5440680443502757;j
 LDT;exp;circuit;word;noncognate;7;2.5327543789924976;j
 LDT;exp;timer;word;noncognate;5;2.505149978319906;j
 LDT;exp;baggage;word;noncognate;7;2.503790683057181;j
@@ -98,7 +96,9 @@ LDT;exp;gambler;word;noncognate;7;2.3710678622717363;j
 LDT;exp;lookout;word;noncognate;7;2.357934847000454;j
 LDT;exp;advisor;word;noncognate;7;2.3541084391474008;j
 LDT;exp;squadron;word;noncognate;8;2.3521825181113627;j
-LDT;exp;posse;word;noncognate;5;2.346352974450639;j
+LDT;exp;chump;word;noncognate;5;2.322219294733919;j
+LDT;exp;alias;word;noncognate;5;2.3201462861110542;j
+LDT;exp;domino;word;noncognate;6;2.3138672203691533;j
 LDT;exp;stran;nonword;NA;5;NA;f
 LDT;exp;drime;nonword;NA;5;NA;f
 LDT;exp;blaff;nonword;NA;5;NA;f
@@ -123,7 +123,6 @@ LDT;exp;swaph;nonword;NA;5;NA;f
 LDT;exp;gharl;nonword;NA;5;NA;f
 LDT;exp;phlid;nonword;NA;5;NA;f
 LDT;exp;frish;nonword;NA;5;NA;f
-LDT;exp;spazz;nonword;NA;5;NA;f
 LDT;exp;sproar;nonword;NA;6;NA;f
 LDT;exp;snutch;nonword;NA;6;NA;f
 LDT;exp;ghorch;nonword;NA;6;NA;f
@@ -147,6 +146,7 @@ LDT;exp;chunch;nonword;NA;6;NA;f
 LDT;exp;gworne;nonword;NA;6;NA;f
 LDT;exp;thwoad;nonword;NA;6;NA;f
 LDT;exp;slance;nonword;NA;6;NA;f
+LDT;exp;shrurt;nonword;NA;6;NA;f
 LDT;exp;thwould;nonword;NA;7;NA;f
 LDT;exp;scrouse;nonword;NA;7;NA;f
 LDT;exp;splanch;nonword;NA;7;NA;f
@@ -173,6 +173,7 @@ LDT;exp;thrauge;nonword;NA;7;NA;f
 LDT;exp;scrorde;nonword;NA;7;NA;f
 LDT;exp;splepth;nonword;NA;7;NA;f
 LDT;exp;wrasque;nonword;NA;7;NA;f
+LDT;exp;speethe;nonword;NA;7;NA;f
 LDT;exp;sprource;nonword;NA;8;NA;f
 LDT;exp;phloathe;nonword;NA;8;NA;f
 LDT;exp;scrorque;nonword;NA;8;NA;f
@@ -198,4 +199,3 @@ LDT;exp;throothe;nonword;NA;8;NA;f
 LDT;exp;splorgue;nonword;NA;8;NA;f
 LDT;exp;treighth;nonword;NA;8;NA;f
 LDT;exp;phrarmth;nonword;NA;8;NA;f
-LDT;exp;strautch;nonword;NA;8;NA;f
