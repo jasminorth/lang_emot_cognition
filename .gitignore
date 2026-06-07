@@ -1,3 +1,9 @@
+# environment
+.venv/
+venv/
+
+
+
 BRM-emot-submit.csv
 CogNet-v1.0.tsv
 SUBTLEXusfrequencyabove1.xls
