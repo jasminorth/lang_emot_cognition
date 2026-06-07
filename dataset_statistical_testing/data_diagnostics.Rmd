@@ -1,0 +1,170 @@
+---
+title: "Stimulus Diagnostics"
+author: "Jasmin"
+date: "2026-06-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+
+
+```
+
+
+
+## Struktur
+In diesem Skript überprüfen wir ob unsere Stimuli gut ausbalanciert sind. Da wir sie ja vorher automatisch ausgewählt haben und in unserem Code bereits sehr viel balanciert haben, sollte dieser Schritt hier nur noch eine Formalität sein.
+
+Im Folgenden schauen wir:
+* Sind Wörter und Nicht-Wörter in Bezug auf Länge ausbalanciert?
+* Sind Wörter in Bezug auf Frequenz gut verteilt?
+
+Zu jedem dieser Punkte erstellen wir auch einen Plot, um unsere Ergebnisse visuell darzustellen. Da wir die Seminararbeit ja sowohl auf Deutsch als auch auf Englisch schreiben können, erstelle ich jeden Plot einmal in beiden Sprachen.
+
+##### Frage zu den Plots:
+* Sagt man im Deutschen Nonwords oder Nicht-Wörter?
+* Was für Farben? Siehe https://bookdown.org/hneth/ds4psy/D.3-apx-colors-basics.html - wenn ihr bestimmte Farben haben wollt, schickt mir bitte eine Auflistung welche Farbe für was verwendet werden soll :) oder, falls ihr Erfahrung mit R habt, könnt ihr es natürlich auch selber anpassen:
+
+```{r}
+# Deutsche Plot-Einstellungen
+farben = c("darkolivegreen2", "darkorchid1")
+namen = c("Nonwords", "Wörter")
+farbe_wörter = c("darkorchid1")
+
+# Englische Plot-Einstellungen
+colours = c("darkolivegreen2", "darkorchid1")
+names = c("Nonwords", "Words")
+colour_words = c("darkorchid1")
+```
+
+## Datensatz Laden
+
+Wir laden jetzt den Datensatz. Ganz wichtig: Dafür muss er in dem gleichen Ordner sein wie dieses Skript.
+
+```{r load_data}
+df <- read_delim("dataset_experiment_stimuli.csv", delim = ";")
+```
+
+## Länge
+Als Erstes überprüfen wir, ob Wörter und Nicht-Wörter in Bezug auf Länge ausbalanciert sind.
+
+
+Hier geben wir den Durchschnitt, die Standardabweichung, das Minimum und das Maximum der Länge unserer Wörter bzw. Nicht-Wörter aus:
+```{r}
+df %>%
+  group_by(Condition) %>%
+  summarise(
+    mean_length = mean(Length),
+    sd_length   = sd(Length),
+    min_length  = min(Length),
+    max_length  = max(Length),
+    n = n()
+  )
+```
+
+### T-test
+
+Der T-test berechnet, ob unsere Wörter auch statistisch gleich sind. Ein hoher p-Wert bedeutet hier, dass unsere Wörter sehr ähnlich sind, ein niedriger, dass unsere Wörter statistisch signifikant unterschiedlich sind. Beim t-Wert ist es genau anders herum.
+
+Wir wollen hier also eine möglichst hohen p-Wert und einen möglichst niedrigen t-Wert sehen. 
+```{r}
+t.test(Length ~ Condition, data = df)
+```
+### Plotten
+
+Ein hübscher Plot kommt immer gut. Hier kann man sehen, wie viele Wörter und wie viele Nicht-Wörter welche Länge haben.
+
+##### Deutsch
+
+```{r plot_länge, echo=FALSE}
+p_length <- ggplot(df, aes(x = Length, fill = Condition)) +
+  geom_histogram(position = "dodge", alpha = 0.5, bins = 10) +
+  theme_minimal() +
+  scale_fill_manual(values = farben, labels = namen) +
+  labs(x = "Länge", y = "Anzahl", fill = "Bedingung")
+
+p_length
+
+# export plot (pdf & png)
+ggsave("länge_verteilung.pdf", p_length, width = 6, height = 4)
+ggsave("länge_verteilung.png", p_length, width = 6, height = 4, dpi = 300)
+```
+
+
+##### Englisch
+
+```{r plot_length, echo=FALSE}
+p_length <- ggplot(df, aes(x = Length, fill = Condition)) +
+  geom_histogram(position = "dodge", alpha = 0.5, bins = 10) +
+  theme_minimal() +
+  scale_fill_manual(values = colours, labels = names) +
+  labs(x = "Length", y = "Count", fill = "Condition")
+
+p_length
+
+# export plot (pdf & png)
+ggsave("length_distribution.pdf", p_length, width = 6, height = 4)
+ggsave("length_distribution.png", p_length, width = 6, height = 4, dpi = 300)
+```
+
+## Frequenz (nur Wörter)
+
+Hier überprüfen wir nun, ob unsere Wörter von ihrer Frequenz her gut verteilt sind. Das ist sehr ähnlich zu dem, was wir bereits in der Stimuliauswahl gemacht haben, und anhand dessen wir unsere Wortliste weiter gekürzt haben.
+
+
+Hier geben wir den Durchschnitt, die Standardabweichung, das Minimum und das Maximum der Frequenz unserer Wörter aus:
+```{r}
+words <- df %>% filter(Condition == "word")
+
+words %>%
+  summarise(
+    mean_freq = mean(Lg10SUBTLEX_US),
+    sd_freq   = sd(Lg10SUBTLEX_US),
+    min_freq  = min(Lg10SUBTLEX_US),
+    max_freq  = max(Lg10SUBTLEX_US),
+    n = n()
+  )
+```
+
+
+### Plotten
+
+
+##### Deutsch
+```{r plot_frequenz, echo=FALSE}
+p_freq <- ggplot(words, aes(x = Lg10SUBTLEX_US)) +
+  geom_histogram(bins = 20, fill = farbe_wörter, color = "darkgrey", alpha = 0.5) +
+  theme_minimal() +
+  labs(x = "Log10 SUBTLEX-US Frequenz", y = "Anzahl")
+
+p_freq
+
+# export plot (pdf & png)
+ggsave("frequenz_verteilung.pdf", p_freq, width = 6, height = 4)
+ggsave("frequenz_verteilung.png", p_freq, width = 6, height = 4, dpi = 300)
+```
+
+##### Englisch
+
+```{r plot_frequency, echo=FALSE}
+p_freq <- ggplot(words, aes(x = Lg10SUBTLEX_US)) +
+  geom_histogram(bins = 20, fill = colour_words, color = "darkgrey", alpha = 0.5) +
+  theme_minimal() +
+  labs(x = "Log10 SUBTLEX-US Frequency", y = "Count")
+
+p_freq
+
+# export plot (pdf & png)
+ggsave("frequency_distribution.pdf", p_freq, width = 6, height = 4)
+ggsave("frequency_distribution.png", p_freq, width = 6, height = 4, dpi = 300)
+```
+
+
+
+
