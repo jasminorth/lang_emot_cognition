@@ -48,8 +48,14 @@ colour_words = c("darkorchid1")
 
 Wir laden jetzt den Datensatz. Ganz wichtig: Dafür muss er in dem gleichen Ordner sein wie dieses Skript.
 
+Außerdem filtern wir noch die practice items heraus. Diese fließen ja nicht in unsere Analyse mit ein.
+
 ```{r load_data}
-df <- read_delim("dataset_experiment_stimuli.csv", delim = ";")
+# Datensatz laden
+df <- read_delim("dataset_experiment_stimuli_with_prac.csv", delim = ";")
+
+# practice items herausfiltern
+df <- df %>% filter(Item_type == "exp")
 ```
 
 ## Länge
