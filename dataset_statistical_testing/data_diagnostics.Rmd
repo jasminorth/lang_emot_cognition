@@ -22,6 +22,7 @@ knitr::opts_chunk$set(
 In diesem Skript überprüfen wir ob unsere Stimuli gut ausbalanciert sind. Da wir sie ja vorher automatisch ausgewählt haben und in unserem Code bereits sehr viel balanciert haben, sollte dieser Schritt hier nur noch eine Formalität sein.
 
 Im Folgenden schauen wir:
+
 * Sind Wörter und Nicht-Wörter in Bezug auf Länge ausbalanciert?
 * Sind Wörter in Bezug auf Frequenz gut verteilt?
 
@@ -165,6 +166,7 @@ ggsave("frequency_distribution.pdf", p_freq, width = 6, height = 4)
 ggsave("frequency_distribution.png", p_freq, width = 6, height = 4, dpi = 300)
 ```
 
-
+```{r}
+```
 
 
