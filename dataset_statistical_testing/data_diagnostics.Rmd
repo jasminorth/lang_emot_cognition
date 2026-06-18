@@ -26,7 +26,7 @@ Im Folgenden schauen wir:
 * Sind Wörter und Nicht-Wörter in Bezug auf Länge ausbalanciert?
 * Sind Wörter in Bezug auf Frequenz gut verteilt?
 
-Zu jedem dieser Punkte erstellen wir auch einen Plot, um unsere Ergebnisse visuell darzustellen. Da wir die Seminararbeit ja sowohl auf Deutsch als auch auf Englisch schreiben können, erstelle ich jeden Plot einmal in beiden Sprachen.
+Zu jedem dieser zwei Punkte erstellen wir auch einen Plot, um unsere Ergebnisse visuell darzustellen. Da wir die Seminararbeit ja sowohl auf Deutsch als auch auf Englisch schreiben können, erstelle ich jeden Plot einmal in beiden Sprachen.
 
 ##### Frage zu den Plots:
 * Sagt man im Deutschen Nonwords oder Nicht-Wörter?
@@ -52,14 +52,14 @@ Außerdem filtern wir noch die practice items heraus. Diese fließen ja nicht in
 
 ```{r load_data}
 # Datensatz laden
-df <- read_delim("dataset_experiment_stimuli_with_prac.csv", delim = ";")
+df <- read_delim("dataset_experiment_stimuli.csv", delim = ";")
 
 # practice items herausfiltern
 df <- df %>% filter(Item_type == "exp")
 ```
 
 ## Länge
-Als Erstes überprüfen wir, ob Wörter und Nicht-Wörter in Bezug auf Länge ausbalanciert sind.
+Als Erstes überprüfen wir, ob Wörter und Nicht-Wörter in Bezug auf Länge ausbalanciert sind. Aufgrund der Art und Weise, mit der wir die Stimuli vorher automatisch ausgesucht haben, erwarten wir, dass diese jetzt bezüglich Länge genau gleich sind.
 
 
 Hier geben wir den Durchschnitt, die Standardabweichung, das Minimum und das Maximum der Länge unserer Wörter bzw. Nicht-Wörter aus:
@@ -122,7 +122,7 @@ ggsave("length_distribution.png", p_length, width = 6, height = 4, dpi = 300)
 
 ## Frequenz (nur Wörter)
 
-Hier überprüfen wir nun, ob unsere Wörter von ihrer Frequenz her gut verteilt sind. Das ist sehr ähnlich zu dem, was wir bereits in der Stimuliauswahl gemacht haben, und anhand dessen wir unsere Wortliste weiter gekürzt haben.
+Hier überprüfen wir nun, ob unsere Wörter von ihrer Frequenz her gut verteilt sind. Das ist sehr ähnlich zu dem, was wir bereits in der Stimuliauswahl gemacht haben, und anhand dessen wir unsere Wortliste weiter gekürzt haben. Auch hier sollten uns also keine Überraschungen erwarten.
 
 
 Hier geben wir den Durchschnitt, die Standardabweichung, das Minimum und das Maximum der Frequenz unserer Wörter aus:
@@ -172,7 +172,5 @@ ggsave("frequency_distribution.pdf", p_freq, width = 6, height = 4)
 ggsave("frequency_distribution.png", p_freq, width = 6, height = 4, dpi = 300)
 ```
 
-```{r}
-```
 
 
