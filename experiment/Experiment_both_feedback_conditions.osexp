@@ -1,0 +1,1597 @@
+---
+API: 3
+OpenSesame: 4.1.9
+Platform: nt
+---
+set width 1024
+set title Experiment_both_feedback_conditions
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend psycho
+set round_decimals 2
+set mouse_backend psycho
+set keyboard_backend psycho
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic False
+set font_family mono
+set font_bold False
+set experiment_path "C:\\Users\\jasmi\\Documents\\Master\\2_SS26\\Sprache, Emotion und Kognition\\Project\\experiment"
+set disable_garbage_collection False
+set description "The main experiment item"
+set color_backend psycho
+set clock_backend psycho
+set canvas_backend psycho
+set background "#000000"
+
+define keyboard_response break_keyboard_response
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set allowed_responses space
+
+define sketchpad break_no_feedback
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="End of block.<br /><br /><br /><br />Take a break until you feel ready to continue.<br /><br />Press the space bar to complete the rest of the experiment." x=0 y=0 z_index=0
+
+define sketchpad break_with_feedback
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="End of block.<br /><br />Your accuracy was [acc]%.<br /><br />Take a break until you feel ready to continue.<br /><br />Press the space bar to complete the rest of the experiment." x=0 y=0 z_index=0
+
+define sequence breaking_sequence
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run break_no_feedback "[subject_parity] = even"
+	run break_with_feedback "[subject_parity] = odd"
+	run break_keyboard_response True
+	run new_1_reset_feedback True
+
+define feedback end_of
+	set reset_variables yes
+	set duration 0
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="" x=-96 y=-160 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="Congratulations, you reached the end of the experiment!<br /><br />Your accuracy was [acc]%.<br /><br />Thank you for your participation. Please press the space bar to end the experiment." x=0 y=0 z_index=0
+
+define keyboard_response end_of_exp_keyboard_response
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set allowed_responses space
+
+define feedback end_of_exp_no_feedback
+	set reset_variables yes
+	set duration 0
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="" x=-96 y=-160 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="Congratulations, you reached the end of the experiment!<br /><br /><br /><br />Thank you for your participation. Please press the space bar to end the experiment." x=0 y=0 z_index=0
+
+define sketchpad end_of_exp_no_feedbackkk
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="Congratulations, you reached the end of the experiment!<br /><br /><br /><br />Thank you for your participation. Please press the space bar to end the experiment." x=0 y=0 z_index=0
+
+define sketchpad end_of_exp_with_feedbackkk
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="Congratulations, you reached the end of the experiment!<br /><br />Your accuracy was [acc]%.<br /><br />Thank you for your participation. Please press the space bar to end the experiment." x=0 y=0 z_index=0
+
+define keyboard_response end_of_prac_keyboard_response
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set allowed_responses space
+
+define sketchpad end_of_prac_no_feedback
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="You have reached the end of the practice run.<br /><br /><br /><br />If any questions remained, please ask them now.<br /><br />Otherwise, we can start our experiment! Please press the space bar to start." x=0 y=0 z_index=0
+
+define sketchpad end_of_prac_with_feedback
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="You have reached the end of the practice run.<br /><br />Your accuracy was [var.practice_acc]%<br /><br />If any questions remained, please ask them now.<br /><br />Otherwise, we can start our experiment! Please press the space bar to start." x=0 y=0 z_index=0
+
+define feedback end_of_prac_with_feedbackk
+	set reset_variables yes
+	set duration 0
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="" x=-96 y=-160 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="You have reached the end of the practice run.<br /><br />Your accuracy was [acc]%<br /><br />If any questions remained, please ask them now.<br /><br />Otherwise, we can start our experiment! Please press the space bar to start." x=0 y=0 z_index=0
+
+define feedback end_of_practice_no_feedback
+	set reset_variables yes
+	set duration 0
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="" x=-96 y=-160 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="You have reached the end of the practice run.<br /><br /><br /><br />If any questions remained, please ask them now.<br /><br />Otherwise, we can start our experiment! Please press the space bar to start." x=0 y=0 z_index=0
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run participants True
+	run instructions True
+	run instructions_keyboard_response True
+	run practice_loop True
+	run reset_trial_counter True
+	run end_of_practice_no_feedback "[subject_parity] = even"
+	run end_of_prac_with_feedbackk "[subject_parity] = odd"
+	run end_of_prac_keyboard_response True
+	run experimental_loop True
+	run end_of_exp_no_feedback True
+	run end_of True
+	run end_of_exp_keyboard_response True
+
+define loop experimental_loop
+	set source_file ""
+	set source table
+	set repeat 1
+	set order random
+	set description "Repeatedly runs another item"
+	set cycles 180
+	set continuous no
+	set break_if_on_first yes
+	set break_if False
+	setcycle 0 Experiment LDT
+	setcycle 0 Item_type exp
+	setcycle 0 Stimulus BASEMENT
+	setcycle 0 Condition word
+	setcycle 0 Length 8
+	setcycle 0 Lg10SUBTLEX_US 3.031408464251624
+	setcycle 0 correct_response j
+	setcycle 1 Experiment LDT
+	setcycle 1 Item_type exp
+	setcycle 1 Stimulus FORTRESS
+	setcycle 1 Condition word
+	setcycle 1 Length 8
+	setcycle 1 Lg10SUBTLEX_US 2.2380461031287955
+	setcycle 1 correct_response j
+	setcycle 2 Experiment LDT
+	setcycle 2 Item_type exp
+	setcycle 2 Stimulus DARKNESS
+	setcycle 2 Condition word
+	setcycle 2 Length 8
+	setcycle 2 Lg10SUBTLEX_US 2.9508514588885464
+	setcycle 2 correct_response j
+	setcycle 3 Experiment LDT
+	setcycle 3 Item_type exp
+	setcycle 3 Stimulus DISGUISE
+	setcycle 3 Condition word
+	setcycle 3 Length 8
+	setcycle 3 Lg10SUBTLEX_US 2.6009728956867484
+	setcycle 3 correct_response j
+	setcycle 4 Experiment LDT
+	setcycle 4 Item_type exp
+	setcycle 4 Stimulus ELECTION
+	setcycle 4 Condition word
+	setcycle 4 Length 8
+	setcycle 4 Lg10SUBTLEX_US 2.7489628612561616
+	setcycle 4 correct_response j
+	setcycle 5 Experiment LDT
+	setcycle 5 Item_type exp
+	setcycle 5 Stimulus DUMBBELL
+	setcycle 5 Condition word
+	setcycle 5 Length 8
+	setcycle 5 Lg10SUBTLEX_US 1.414973347970818
+	setcycle 5 correct_response j
+	setcycle 6 Experiment LDT
+	setcycle 6 Item_type exp
+	setcycle 6 Stimulus OMISSION
+	setcycle 6 Condition word
+	setcycle 6 Length 8
+	setcycle 6 Lg10SUBTLEX_US 1.3222192947339193
+	setcycle 6 correct_response j
+	setcycle 7 Experiment LDT
+	setcycle 7 Item_type exp
+	setcycle 7 Stimulus SHOWBOAT
+	setcycle 7 Condition word
+	setcycle 7 Length 8
+	setcycle 7 Lg10SUBTLEX_US 1.3222192947339193
+	setcycle 7 correct_response j
+	setcycle 8 Experiment LDT
+	setcycle 8 Item_type exp
+	setcycle 8 Stimulus LICORICE
+	setcycle 8 Condition word
+	setcycle 8 Length 8
+	setcycle 8 Lg10SUBTLEX_US 1.6532125137753437
+	setcycle 8 correct_response j
+	setcycle 9 Experiment LDT
+	setcycle 9 Item_type exp
+	setcycle 9 Stimulus BULKHEAD
+	setcycle 9 Condition word
+	setcycle 9 Length 8
+	setcycle 9 Lg10SUBTLEX_US 1.6901960800285136
+	setcycle 9 correct_response j
+	setcycle 10 Experiment LDT
+	setcycle 10 Item_type exp
+	setcycle 10 Stimulus HAIRLINE
+	setcycle 10 Condition word
+	setcycle 10 Length 8
+	setcycle 10 Lg10SUBTLEX_US 1.7993405494535817
+	setcycle 10 correct_response j
+	setcycle 11 Experiment LDT
+	setcycle 11 Item_type exp
+	setcycle 11 Stimulus REVERSAL
+	setcycle 11 Condition word
+	setcycle 11 Length 8
+	setcycle 11 Lg10SUBTLEX_US 1.7634279935629373
+	setcycle 11 correct_response j
+	setcycle 12 Experiment LDT
+	setcycle 12 Item_type exp
+	setcycle 12 Stimulus BACKSIDE
+	setcycle 12 Condition word
+	setcycle 12 Length 8
+	setcycle 12 Lg10SUBTLEX_US 1.9344984512435677
+	setcycle 12 correct_response j
+	setcycle 13 Experiment LDT
+	setcycle 13 Item_type exp
+	setcycle 13 Stimulus FINALITY
+	setcycle 13 Condition word
+	setcycle 13 Length 8
+	setcycle 13 Lg10SUBTLEX_US 1.3222192947339193
+	setcycle 13 correct_response j
+	setcycle 14 Experiment LDT
+	setcycle 14 Item_type exp
+	setcycle 14 Stimulus ADJUSTER
+	setcycle 14 Condition word
+	setcycle 14 Length 8
+	setcycle 14 Lg10SUBTLEX_US 1.3222192947339193
+	setcycle 14 correct_response j
+	setcycle 15 Experiment LDT
+	setcycle 15 Item_type exp
+	setcycle 15 Stimulus HENHOUSE
+	setcycle 15 Condition word
+	setcycle 15 Length 8
+	setcycle 15 Lg10SUBTLEX_US 1.3222192947339193
+	setcycle 15 correct_response j
+	setcycle 16 Experiment LDT
+	setcycle 16 Item_type exp
+	setcycle 16 Stimulus OVERSEER
+	setcycle 16 Condition word
+	setcycle 16 Length 8
+	setcycle 16 Lg10SUBTLEX_US 1.3424226808222062
+	setcycle 16 correct_response j
+	setcycle 17 Experiment LDT
+	setcycle 17 Item_type exp
+	setcycle 17 Stimulus HUNTRESS
+	setcycle 17 Condition word
+	setcycle 17 Length 8
+	setcycle 17 Lg10SUBTLEX_US 1.3222192947339193
+	setcycle 17 correct_response j
+	setcycle 18 Experiment LDT
+	setcycle 18 Item_type exp
+	setcycle 18 Stimulus BACKSEAT
+	setcycle 18 Condition word
+	setcycle 18 Length 8
+	setcycle 18 Lg10SUBTLEX_US 2.0718820073061255
+	setcycle 18 correct_response j
+	setcycle 19 Experiment LDT
+	setcycle 19 Item_type exp
+	setcycle 19 Stimulus SQUADRON
+	setcycle 19 Condition word
+	setcycle 19 Length 8
+	setcycle 19 Lg10SUBTLEX_US 2.3521825181113627
+	setcycle 19 correct_response j
+	setcycle 20 Experiment LDT
+	setcycle 20 Item_type exp
+	setcycle 20 Stimulus EXPOSURE
+	setcycle 20 Condition word
+	setcycle 20 Length 8
+	setcycle 20 Lg10SUBTLEX_US 2.4653828514484184
+	setcycle 20 correct_response j
+	setcycle 21 Experiment LDT
+	setcycle 21 Item_type exp
+	setcycle 21 Stimulus OVERTIME
+	setcycle 21 Condition word
+	setcycle 21 Length 8
+	setcycle 21 Lg10SUBTLEX_US 2.503790683057181
+	setcycle 21 correct_response j
+	setcycle 22 Experiment LDT
+	setcycle 22 Item_type exp
+	setcycle 22 Stimulus GASOLINE
+	setcycle 22 Condition word
+	setcycle 22 Length 8
+	setcycle 22 Lg10SUBTLEX_US 2.5237464668115646
+	setcycle 22 correct_response j
+	setcycle 23 Experiment LDT
+	setcycle 23 Item_type exp
+	setcycle 23 Stimulus JUNKYARD
+	setcycle 23 Condition word
+	setcycle 23 Length 8
+	setcycle 23 Lg10SUBTLEX_US 2.1398790864012365
+	setcycle 23 correct_response j
+	setcycle 24 Experiment LDT
+	setcycle 24 Item_type exp
+	setcycle 24 Stimulus EXAMINER
+	setcycle 24 Condition word
+	setcycle 24 Length 8
+	setcycle 24 Lg10SUBTLEX_US 2.1172712956557644
+	setcycle 24 correct_response j
+	setcycle 25 Experiment LDT
+	setcycle 25 Item_type exp
+	setcycle 25 Stimulus CUPBOARD
+	setcycle 25 Condition word
+	setcycle 25 Length 8
+	setcycle 25 Lg10SUBTLEX_US 2.1072099696478683
+	setcycle 25 correct_response j
+	setcycle 26 Experiment LDT
+	setcycle 26 Item_type exp
+	setcycle 26 Stimulus RESTROOM
+	setcycle 26 Condition word
+	setcycle 26 Length 8
+	setcycle 26 Lg10SUBTLEX_US 2.100370545117563
+	setcycle 26 correct_response j
+	setcycle 27 Experiment LDT
+	setcycle 27 Item_type exp
+	setcycle 27 Stimulus UTILITY
+	setcycle 27 Condition word
+	setcycle 27 Length 7
+	setcycle 27 Lg10SUBTLEX_US 2.060697840353612
+	setcycle 27 correct_response j
+	setcycle 28 Experiment LDT
+	setcycle 28 Item_type exp
+	setcycle 28 Stimulus KICKOFF
+	setcycle 28 Condition word
+	setcycle 28 Length 7
+	setcycle 28 Lg10SUBTLEX_US 1.7323937598229686
+	setcycle 28 correct_response j
+	setcycle 29 Experiment LDT
+	setcycle 29 Item_type exp
+	setcycle 29 Stimulus REMOVAL
+	setcycle 29 Condition word
+	setcycle 29 Length 7
+	setcycle 29 Lg10SUBTLEX_US 2.0253058652647704
+	setcycle 29 correct_response j
+	setcycle 30 Experiment LDT
+	setcycle 30 Item_type exp
+	setcycle 30 Stimulus LOOKOUT
+	setcycle 30 Condition word
+	setcycle 30 Length 7
+	setcycle 30 Lg10SUBTLEX_US 2.357934847000454
+	setcycle 30 correct_response j
+	setcycle 31 Experiment LDT
+	setcycle 31 Item_type exp
+	setcycle 31 Stimulus PLATOON
+	setcycle 31 Condition word
+	setcycle 31 Length 7
+	setcycle 31 Lg10SUBTLEX_US 2.56702636615906
+	setcycle 31 correct_response j
+	setcycle 32 Experiment LDT
+	setcycle 32 Item_type exp
+	setcycle 32 Stimulus COUNCIL
+	setcycle 32 Condition word
+	setcycle 32 Length 7
+	setcycle 32 Lg10SUBTLEX_US 2.936513742478893
+	setcycle 32 correct_response j
+	setcycle 33 Experiment LDT
+	setcycle 33 Item_type exp
+	setcycle 33 Stimulus STORAGE
+	setcycle 33 Condition word
+	setcycle 33 Length 7
+	setcycle 33 Lg10SUBTLEX_US 2.656098202012832
+	setcycle 33 correct_response j
+	setcycle 34 Experiment LDT
+	setcycle 34 Item_type exp
+	setcycle 34 Stimulus VERDICT
+	setcycle 34 Condition word
+	setcycle 34 Length 7
+	setcycle 34 Lg10SUBTLEX_US 2.747411807886423
+	setcycle 34 correct_response j
+	setcycle 35 Experiment LDT
+	setcycle 35 Item_type exp
+	setcycle 35 Stimulus BLADDER
+	setcycle 35 Condition word
+	setcycle 35 Length 7
+	setcycle 35 Lg10SUBTLEX_US 2.307496037913213
+	setcycle 35 correct_response j
+	setcycle 36 Experiment LDT
+	setcycle 36 Item_type exp
+	setcycle 36 Stimulus JANITOR
+	setcycle 36 Condition word
+	setcycle 36 Length 7
+	setcycle 36 Lg10SUBTLEX_US 2.4668676203541096
+	setcycle 36 correct_response j
+	setcycle 37 Experiment LDT
+	setcycle 37 Item_type exp
+	setcycle 37 Stimulus CIRCUIT
+	setcycle 37 Condition word
+	setcycle 37 Length 7
+	setcycle 37 Lg10SUBTLEX_US 2.5327543789924976
+	setcycle 37 correct_response j
+	setcycle 38 Experiment LDT
+	setcycle 38 Item_type exp
+	setcycle 38 Stimulus BAGGAGE
+	setcycle 38 Condition word
+	setcycle 38 Length 7
+	setcycle 38 Lg10SUBTLEX_US 2.503790683057181
+	setcycle 38 correct_response j
+	setcycle 39 Experiment LDT
+	setcycle 39 Item_type exp
+	setcycle 39 Stimulus RAMPART
+	setcycle 39 Condition word
+	setcycle 39 Length 7
+	setcycle 39 Lg10SUBTLEX_US 1.5797835966168101
+	setcycle 39 correct_response j
+	setcycle 40 Experiment LDT
+	setcycle 40 Item_type exp
+	setcycle 40 Stimulus REDNECK
+	setcycle 40 Condition word
+	setcycle 40 Length 7
+	setcycle 40 Lg10SUBTLEX_US 1.9590413923210936
+	setcycle 40 correct_response j
+	setcycle 41 Experiment LDT
+	setcycle 41 Item_type exp
+	setcycle 41 Stimulus GUESSER
+	setcycle 41 Condition word
+	setcycle 41 Length 7
+	setcycle 41 Lg10SUBTLEX_US 1.3222192947339193
+	setcycle 41 correct_response j
+	setcycle 42 Experiment LDT
+	setcycle 42 Item_type exp
+	setcycle 42 Stimulus CHANGER
+	setcycle 42 Condition word
+	setcycle 42 Length 7
+	setcycle 42 Lg10SUBTLEX_US 1.380211241711606
+	setcycle 42 correct_response j
+	setcycle 43 Experiment LDT
+	setcycle 43 Item_type exp
+	setcycle 43 Stimulus RECTORY
+	setcycle 43 Condition word
+	setcycle 43 Length 7
+	setcycle 43 Lg10SUBTLEX_US 1.4471580313422192
+	setcycle 43 correct_response j
+	setcycle 44 Experiment LDT
+	setcycle 44 Item_type exp
+	setcycle 44 Stimulus ANTHILL
+	setcycle 44 Condition word
+	setcycle 44 Length 7
+	setcycle 44 Lg10SUBTLEX_US 1.4771212547196624
+	setcycle 44 correct_response j
+	setcycle 45 Experiment LDT
+	setcycle 45 Item_type exp
+	setcycle 45 Stimulus DUSTPAN
+	setcycle 45 Condition word
+	setcycle 45 Length 7
+	setcycle 45 Lg10SUBTLEX_US 1.146128035678238
+	setcycle 45 correct_response j
+	setcycle 46 Experiment LDT
+	setcycle 46 Item_type exp
+	setcycle 46 Stimulus EMPRESS
+	setcycle 46 Condition word
+	setcycle 46 Length 7
+	setcycle 46 Lg10SUBTLEX_US 2.1702617153949575
+	setcycle 46 correct_response j
+	setcycle 47 Experiment LDT
+	setcycle 47 Item_type exp
+	setcycle 47 Stimulus PURSUIT
+	setcycle 47 Condition word
+	setcycle 47 Length 7
+	setcycle 47 Lg10SUBTLEX_US 2.5563025007672873
+	setcycle 47 correct_response j
+	setcycle 48 Experiment LDT
+	setcycle 48 Item_type exp
+	setcycle 48 Stimulus ADVISOR
+	setcycle 48 Condition word
+	setcycle 48 Length 7
+	setcycle 48 Lg10SUBTLEX_US 2.3541084391474008
+	setcycle 48 correct_response j
+	setcycle 49 Experiment LDT
+	setcycle 49 Item_type exp
+	setcycle 49 Stimulus GASKET
+	setcycle 49 Condition word
+	setcycle 49 Length 6
+	setcycle 49 Lg10SUBTLEX_US 1.5440680443502757
+	setcycle 49 correct_response j
+	setcycle 50 Experiment LDT
+	setcycle 50 Item_type exp
+	setcycle 50 Stimulus DUGOUT
+	setcycle 50 Condition word
+	setcycle 50 Length 6
+	setcycle 50 Lg10SUBTLEX_US 1.6720978579357175
+	setcycle 50 correct_response j
+	setcycle 51 Experiment LDT
+	setcycle 51 Item_type exp
+	setcycle 51 Stimulus BARREL
+	setcycle 51 Condition word
+	setcycle 51 Length 6
+	setcycle 51 Lg10SUBTLEX_US 2.734799829588847
+	setcycle 51 correct_response j
+	setcycle 52 Experiment LDT
+	setcycle 52 Item_type exp
+	setcycle 52 Stimulus BUSTER
+	setcycle 52 Condition word
+	setcycle 52 Length 6
+	setcycle 52 Lg10SUBTLEX_US 2.9159272116971158
+	setcycle 52 correct_response j
+	setcycle 53 Experiment LDT
+	setcycle 53 Item_type exp
+	setcycle 53 Stimulus MARROW
+	setcycle 53 Condition word
+	setcycle 53 Length 6
+	setcycle 53 Lg10SUBTLEX_US 2.1818435879447726
+	setcycle 53 correct_response j
+	setcycle 54 Experiment LDT
+	setcycle 54 Item_type exp
+	setcycle 54 Stimulus PESTLE
+	setcycle 54 Condition word
+	setcycle 54 Length 6
+	setcycle 54 Lg10SUBTLEX_US 1.505149978319906
+	setcycle 54 correct_response j
+	setcycle 55 Experiment LDT
+	setcycle 55 Item_type exp
+	setcycle 55 Stimulus CORNER
+	setcycle 55 Condition word
+	setcycle 55 Length 6
+	setcycle 55 Lg10SUBTLEX_US 3.428134794028789
+	setcycle 55 correct_response j
+	setcycle 56 Experiment LDT
+	setcycle 56 Item_type exp
+	setcycle 56 Stimulus BOOKIE
+	setcycle 56 Condition word
+	setcycle 56 Length 6
+	setcycle 56 Lg10SUBTLEX_US 2.1172712956557644
+	setcycle 56 correct_response j
+	setcycle 57 Experiment LDT
+	setcycle 57 Item_type exp
+	setcycle 57 Stimulus LOCKER
+	setcycle 57 Condition word
+	setcycle 57 Length 6
+	setcycle 57 Lg10SUBTLEX_US 2.9116901587538613
+	setcycle 57 correct_response j
+	setcycle 58 Experiment LDT
+	setcycle 58 Item_type exp
+	setcycle 58 Stimulus GIRDER
+	setcycle 58 Condition word
+	setcycle 58 Length 6
+	setcycle 58 Lg10SUBTLEX_US 1.3222192947339193
+	setcycle 58 correct_response j
+	setcycle 59 Experiment LDT
+	setcycle 59 Item_type exp
+	setcycle 59 Stimulus CATNIP
+	setcycle 59 Condition word
+	setcycle 59 Length 6
+	setcycle 59 Lg10SUBTLEX_US 1.3424226808222062
+	setcycle 59 correct_response j
+	setcycle 60 Experiment LDT
+	setcycle 60 Item_type exp
+	setcycle 60 Stimulus GUSHER
+	setcycle 60 Condition word
+	setcycle 60 Length 6
+	setcycle 60 Lg10SUBTLEX_US 1.3222192947339193
+	setcycle 60 correct_response j
+	setcycle 61 Experiment LDT
+	setcycle 61 Item_type exp
+	setcycle 61 Stimulus THROAT
+	setcycle 61 Condition word
+	setcycle 61 Length 6
+	setcycle 61 Lg10SUBTLEX_US 3.2643455070500926
+	setcycle 61 correct_response j
+	setcycle 62 Experiment LDT
+	setcycle 62 Item_type exp
+	setcycle 62 Stimulus DAGGER
+	setcycle 62 Condition word
+	setcycle 62 Length 6
+	setcycle 62 Lg10SUBTLEX_US 2.401400540781544
+	setcycle 62 correct_response j
+	setcycle 63 Experiment LDT
+	setcycle 63 Item_type exp
+	setcycle 63 Stimulus SQUIRE
+	setcycle 63 Condition word
+	setcycle 63 Length 6
+	setcycle 63 Lg10SUBTLEX_US 2.1986570869544226
+	setcycle 63 correct_response j
+	setcycle 64 Experiment LDT
+	setcycle 64 Item_type exp
+	setcycle 64 Stimulus DEBRIS
+	setcycle 64 Condition word
+	setcycle 64 Length 6
+	setcycle 64 Lg10SUBTLEX_US 2.2041199826559246
+	setcycle 64 correct_response j
+	setcycle 65 Experiment LDT
+	setcycle 65 Item_type exp
+	setcycle 65 Stimulus TENANT
+	setcycle 65 Condition word
+	setcycle 65 Length 6
+	setcycle 65 Lg10SUBTLEX_US 2.1931245983544616
+	setcycle 65 correct_response j
+	setcycle 66 Experiment LDT
+	setcycle 66 Item_type exp
+	setcycle 66 Stimulus DOSAGE
+	setcycle 66 Condition word
+	setcycle 66 Length 6
+	setcycle 66 Lg10SUBTLEX_US 2.012837224705172
+	setcycle 66 correct_response j
+	setcycle 67 Experiment LDT
+	setcycle 67 Item_type exp
+	setcycle 67 Stimulus ERRAND
+	setcycle 67 Condition word
+	setcycle 67 Length 6
+	setcycle 67 Lg10SUBTLEX_US 2.311753861055754
+	setcycle 67 correct_response j
+	setcycle 68 Experiment LDT
+	setcycle 68 Item_type exp
+	setcycle 68 Stimulus VANITY
+	setcycle 68 Condition word
+	setcycle 68 Length 6
+	setcycle 68 Lg10SUBTLEX_US 2.3242824552976926
+	setcycle 68 correct_response j
+	setcycle 69 Experiment LDT
+	setcycle 69 Item_type exp
+	setcycle 69 Stimulus JESTER
+	setcycle 69 Condition word
+	setcycle 69 Length 6
+	setcycle 69 Lg10SUBTLEX_US 2.0718820073061255
+	setcycle 69 correct_response j
+	setcycle 70 Experiment LDT
+	setcycle 70 Item_type exp
+	setcycle 70 Stimulus ROSTER
+	setcycle 70 Condition word
+	setcycle 70 Length 6
+	setcycle 70 Lg10SUBTLEX_US 2.0453229787866576
+	setcycle 70 correct_response j
+	setcycle 71 Experiment LDT
+	setcycle 71 Item_type exp
+	setcycle 71 Stimulus ADDER
+	setcycle 71 Condition word
+	setcycle 71 Length 5
+	setcycle 71 Lg10SUBTLEX_US 1.8692317197309762
+	setcycle 71 correct_response j
+	setcycle 72 Experiment LDT
+	setcycle 72 Item_type exp
+	setcycle 72 Stimulus GORGE
+	setcycle 72 Condition word
+	setcycle 72 Length 5
+	setcycle 72 Lg10SUBTLEX_US 1.8325089127062364
+	setcycle 72 correct_response j
+	setcycle 73 Experiment LDT
+	setcycle 73 Item_type exp
+	setcycle 73 Stimulus EMERY
+	setcycle 73 Condition word
+	setcycle 73 Length 5
+	setcycle 73 Lg10SUBTLEX_US 1.9912260756924949
+	setcycle 73 correct_response j
+	setcycle 74 Experiment LDT
+	setcycle 74 Item_type exp
+	setcycle 74 Stimulus GLAND
+	setcycle 74 Condition word
+	setcycle 74 Length 5
+	setcycle 74 Lg10SUBTLEX_US 1.8920946026904804
+	setcycle 74 correct_response j
+	setcycle 75 Experiment LDT
+	setcycle 75 Item_type exp
+	setcycle 75 Stimulus BRIAR
+	setcycle 75 Condition word
+	setcycle 75 Length 5
+	setcycle 75 Lg10SUBTLEX_US 1.6020599913279623
+	setcycle 75 correct_response j
+	setcycle 76 Experiment LDT
+	setcycle 76 Item_type exp
+	setcycle 76 Stimulus TORCH
+	setcycle 76 Condition word
+	setcycle 76 Length 5
+	setcycle 76 Lg10SUBTLEX_US 2.406540180433955
+	setcycle 76 correct_response j
+	setcycle 77 Experiment LDT
+	setcycle 77 Item_type exp
+	setcycle 77 Stimulus SQUID
+	setcycle 77 Condition word
+	setcycle 77 Length 5
+	setcycle 77 Lg10SUBTLEX_US 2.1522883443830563
+	setcycle 77 correct_response j
+	setcycle 78 Experiment LDT
+	setcycle 78 Item_type exp
+	setcycle 78 Stimulus RULER
+	setcycle 78 Condition word
+	setcycle 78 Length 5
+	setcycle 78 Lg10SUBTLEX_US 2.2121876044039577
+	setcycle 78 correct_response j
+	setcycle 79 Experiment LDT
+	setcycle 79 Item_type exp
+	setcycle 79 Stimulus BRICK
+	setcycle 79 Condition word
+	setcycle 79 Length 5
+	setcycle 79 Lg10SUBTLEX_US 2.716003343634799
+	setcycle 79 correct_response j
+	setcycle 80 Experiment LDT
+	setcycle 80 Item_type exp
+	setcycle 80 Stimulus CHAIN
+	setcycle 80 Condition word
+	setcycle 80 Length 5
+	setcycle 80 Lg10SUBTLEX_US 3.0346284566253203
+	setcycle 80 correct_response j
+	setcycle 81 Experiment LDT
+	setcycle 81 Item_type exp
+	setcycle 81 Stimulus ALLEY
+	setcycle 81 Condition word
+	setcycle 81 Length 5
+	setcycle 81 Lg10SUBTLEX_US 2.920123326290724
+	setcycle 81 correct_response j
+	setcycle 82 Experiment LDT
+	setcycle 82 Item_type exp
+	setcycle 82 Stimulus ENTRY
+	setcycle 82 Condition word
+	setcycle 82 Length 5
+	setcycle 82 Lg10SUBTLEX_US 2.79309160017658
+	setcycle 82 correct_response j
+	setcycle 83 Experiment LDT
+	setcycle 83 Item_type exp
+	setcycle 83 Stimulus GATOR
+	setcycle 83 Condition word
+	setcycle 83 Length 5
+	setcycle 83 Lg10SUBTLEX_US 2.2671717284030137
+	setcycle 83 correct_response j
+	setcycle 84 Experiment LDT
+	setcycle 84 Item_type exp
+	setcycle 84 Stimulus BRAKE
+	setcycle 84 Condition word
+	setcycle 84 Length 5
+	setcycle 84 Lg10SUBTLEX_US 2.48572142648158
+	setcycle 84 correct_response j
+	setcycle 85 Experiment LDT
+	setcycle 85 Item_type exp
+	setcycle 85 Stimulus MAYOR
+	setcycle 85 Condition word
+	setcycle 85 Length 5
+	setcycle 85 Lg10SUBTLEX_US 3.2030328870147105
+	setcycle 85 correct_response j
+	setcycle 86 Experiment LDT
+	setcycle 86 Item_type exp
+	setcycle 86 Stimulus PLATE
+	setcycle 86 Condition word
+	setcycle 86 Length 5
+	setcycle 86 Lg10SUBTLEX_US 3.116939646550756
+	setcycle 86 correct_response j
+	setcycle 87 Experiment LDT
+	setcycle 87 Item_type exp
+	setcycle 87 Stimulus CHALK
+	setcycle 87 Condition word
+	setcycle 87 Length 5
+	setcycle 87 Lg10SUBTLEX_US 2.2648178230095364
+	setcycle 87 correct_response j
+	setcycle 88 Experiment LDT
+	setcycle 88 Item_type exp
+	setcycle 88 Stimulus BATON
+	setcycle 88 Condition word
+	setcycle 88 Length 5
+	setcycle 88 Lg10SUBTLEX_US 2.164352855784437
+	setcycle 88 correct_response j
+	setcycle 89 Experiment LDT
+	setcycle 89 Item_type exp
+	setcycle 89 Stimulus VERGE
+	setcycle 89 Condition word
+	setcycle 89 Length 5
+	setcycle 89 Lg10SUBTLEX_US 2.225309281725863
+	setcycle 89 correct_response j
+	setcycle 90 Experiment LDT
+	setcycle 90 Item_type exp
+	setcycle 90 Stimulus SPROURCE
+	setcycle 90 Condition nonword
+	setcycle 90 Length 8
+	setcycle 90 Lg10SUBTLEX_US NA
+	setcycle 90 correct_response f
+	setcycle 91 Experiment LDT
+	setcycle 91 Item_type exp
+	setcycle 91 Stimulus PHLOATHE
+	setcycle 91 Condition nonword
+	setcycle 91 Length 8
+	setcycle 91 Lg10SUBTLEX_US NA
+	setcycle 91 correct_response f
+	setcycle 92 Experiment LDT
+	setcycle 92 Item_type exp
+	setcycle 92 Stimulus SCRORQUE
+	setcycle 92 Condition nonword
+	setcycle 92 Length 8
+	setcycle 92 Lg10SUBTLEX_US NA
+	setcycle 92 correct_response f
+	setcycle 93 Experiment LDT
+	setcycle 93 Item_type exp
+	setcycle 93 Stimulus PHLAITCH
+	setcycle 93 Condition nonword
+	setcycle 93 Length 8
+	setcycle 93 Lg10SUBTLEX_US NA
+	setcycle 93 correct_response f
+	setcycle 94 Experiment LDT
+	setcycle 94 Item_type exp
+	setcycle 94 Stimulus SPROUNGE
+	setcycle 94 Condition nonword
+	setcycle 94 Length 8
+	setcycle 94 Lg10SUBTLEX_US NA
+	setcycle 94 correct_response f
+	setcycle 95 Experiment LDT
+	setcycle 95 Item_type exp
+	setcycle 95 Stimulus WHEIGHTH
+	setcycle 95 Condition nonword
+	setcycle 95 Length 8
+	setcycle 95 Lg10SUBTLEX_US NA
+	setcycle 95 correct_response f
+	setcycle 96 Experiment LDT
+	setcycle 96 Item_type exp
+	setcycle 96 Stimulus SHROURTH
+	setcycle 96 Condition nonword
+	setcycle 96 Length 8
+	setcycle 96 Lg10SUBTLEX_US NA
+	setcycle 96 correct_response f
+	setcycle 97 Experiment LDT
+	setcycle 97 Item_type exp
+	setcycle 97 Stimulus SCROUGHT
+	setcycle 97 Condition nonword
+	setcycle 97 Length 8
+	setcycle 97 Lg10SUBTLEX_US NA
+	setcycle 97 correct_response f
+	setcycle 98 Experiment LDT
+	setcycle 98 Item_type exp
+	setcycle 98 Stimulus STRAITCH
+	setcycle 98 Condition nonword
+	setcycle 98 Length 8
+	setcycle 98 Lg10SUBTLEX_US NA
+	setcycle 98 correct_response f
+	setcycle 99 Experiment LDT
+	setcycle 99 Item_type exp
+	setcycle 99 Stimulus THRARMTH
+	setcycle 99 Condition nonword
+	setcycle 99 Length 8
+	setcycle 99 Lg10SUBTLEX_US NA
+	setcycle 99 correct_response f
+	setcycle 100 Experiment LDT
+	setcycle 100 Item_type exp
+	setcycle 100 Stimulus THROUCHE
+	setcycle 100 Condition nonword
+	setcycle 100 Length 8
+	setcycle 100 Lg10SUBTLEX_US NA
+	setcycle 100 correct_response f
+	setcycle 101 Experiment LDT
+	setcycle 101 Item_type exp
+	setcycle 101 Stimulus PHLARMTH
+	setcycle 101 Condition nonword
+	setcycle 101 Length 8
+	setcycle 101 Lg10SUBTLEX_US NA
+	setcycle 101 correct_response f
+	setcycle 102 Experiment LDT
+	setcycle 102 Item_type exp
+	setcycle 102 Stimulus PHLUSQUE
+	setcycle 102 Condition nonword
+	setcycle 102 Length 8
+	setcycle 102 Lg10SUBTLEX_US NA
+	setcycle 102 correct_response f
+	setcycle 103 Experiment LDT
+	setcycle 103 Item_type exp
+	setcycle 103 Stimulus PHLEATHE
+	setcycle 103 Condition nonword
+	setcycle 103 Length 8
+	setcycle 103 Lg10SUBTLEX_US NA
+	setcycle 103 correct_response f
+	setcycle 104 Experiment LDT
+	setcycle 104 Item_type exp
+	setcycle 104 Stimulus THRORQUE
+	setcycle 104 Condition nonword
+	setcycle 104 Length 8
+	setcycle 104 Lg10SUBTLEX_US NA
+	setcycle 104 correct_response f
+	setcycle 105 Experiment LDT
+	setcycle 105 Item_type exp
+	setcycle 105 Stimulus STROUGHT
+	setcycle 105 Condition nonword
+	setcycle 105 Length 8
+	setcycle 105 Lg10SUBTLEX_US NA
+	setcycle 105 correct_response f
+	setcycle 106 Experiment LDT
+	setcycle 106 Item_type exp
+	setcycle 106 Stimulus PHRORGUE
+	setcycle 106 Condition nonword
+	setcycle 106 Length 8
+	setcycle 106 Lg10SUBTLEX_US NA
+	setcycle 106 correct_response f
+	setcycle 107 Experiment LDT
+	setcycle 107 Item_type exp
+	setcycle 107 Stimulus CLEIGHTH
+	setcycle 107 Condition nonword
+	setcycle 107 Length 8
+	setcycle 107 Lg10SUBTLEX_US NA
+	setcycle 107 correct_response f
+	setcycle 108 Experiment LDT
+	setcycle 108 Item_type exp
+	setcycle 108 Stimulus THWOATHE
+	setcycle 108 Condition nonword
+	setcycle 108 Length 8
+	setcycle 108 Lg10SUBTLEX_US NA
+	setcycle 108 correct_response f
+	setcycle 109 Experiment LDT
+	setcycle 109 Item_type exp
+	setcycle 109 Stimulus SPRISQUE
+	setcycle 109 Condition nonword
+	setcycle 109 Length 8
+	setcycle 109 Lg10SUBTLEX_US NA
+	setcycle 109 correct_response f
+	setcycle 110 Experiment LDT
+	setcycle 110 Item_type exp
+	setcycle 110 Stimulus STROUNCE
+	setcycle 110 Condition nonword
+	setcycle 110 Length 8
+	setcycle 110 Lg10SUBTLEX_US NA
+	setcycle 110 correct_response f
+	setcycle 111 Experiment LDT
+	setcycle 111 Item_type exp
+	setcycle 111 Stimulus SPLORGUE
+	setcycle 111 Condition nonword
+	setcycle 111 Length 8
+	setcycle 111 Lg10SUBTLEX_US NA
+	setcycle 111 correct_response f
+	setcycle 112 Experiment LDT
+	setcycle 112 Item_type exp
+	setcycle 112 Stimulus TREIGHTH
+	setcycle 112 Condition nonword
+	setcycle 112 Length 8
+	setcycle 112 Lg10SUBTLEX_US NA
+	setcycle 112 correct_response f
+	setcycle 113 Experiment LDT
+	setcycle 113 Item_type exp
+	setcycle 113 Stimulus PHRARMTH
+	setcycle 113 Condition nonword
+	setcycle 113 Length 8
+	setcycle 113 Lg10SUBTLEX_US NA
+	setcycle 113 correct_response f
+	setcycle 114 Experiment LDT
+	setcycle 114 Item_type exp
+	setcycle 114 Stimulus STRAUTCH
+	setcycle 114 Condition nonword
+	setcycle 114 Length 8
+	setcycle 114 Lg10SUBTLEX_US NA
+	setcycle 114 correct_response f
+	setcycle 115 Experiment LDT
+	setcycle 115 Item_type exp
+	setcycle 115 Stimulus SCROURTH
+	setcycle 115 Condition nonword
+	setcycle 115 Length 8
+	setcycle 115 Lg10SUBTLEX_US NA
+	setcycle 115 correct_response f
+	setcycle 116 Experiment LDT
+	setcycle 116 Item_type exp
+	setcycle 116 Stimulus THWAUCHE
+	setcycle 116 Condition nonword
+	setcycle 116 Length 8
+	setcycle 116 Lg10SUBTLEX_US NA
+	setcycle 116 correct_response f
+	setcycle 117 Experiment LDT
+	setcycle 117 Item_type exp
+	setcycle 117 Stimulus SHROPSE
+	setcycle 117 Condition nonword
+	setcycle 117 Length 7
+	setcycle 117 Lg10SUBTLEX_US NA
+	setcycle 117 correct_response f
+	setcycle 118 Experiment LDT
+	setcycle 118 Item_type exp
+	setcycle 118 Stimulus SHRUIFF
+	setcycle 118 Condition nonword
+	setcycle 118 Length 7
+	setcycle 118 Lg10SUBTLEX_US NA
+	setcycle 118 correct_response f
+	setcycle 119 Experiment LDT
+	setcycle 119 Item_type exp
+	setcycle 119 Stimulus SCRAUVE
+	setcycle 119 Condition nonword
+	setcycle 119 Length 7
+	setcycle 119 Lg10SUBTLEX_US NA
+	setcycle 119 correct_response f
+	setcycle 120 Experiment LDT
+	setcycle 120 Item_type exp
+	setcycle 120 Stimulus STROUSE
+	setcycle 120 Condition nonword
+	setcycle 120 Length 7
+	setcycle 120 Lg10SUBTLEX_US NA
+	setcycle 120 correct_response f
+	setcycle 121 Experiment LDT
+	setcycle 121 Item_type exp
+	setcycle 121 Stimulus FLOUGHT
+	setcycle 121 Condition nonword
+	setcycle 121 Length 7
+	setcycle 121 Lg10SUBTLEX_US NA
+	setcycle 121 correct_response f
+	setcycle 122 Experiment LDT
+	setcycle 122 Item_type exp
+	setcycle 122 Stimulus SPLYMPH
+	setcycle 122 Condition nonword
+	setcycle 122 Length 7
+	setcycle 122 Lg10SUBTLEX_US NA
+	setcycle 122 correct_response f
+	setcycle 123 Experiment LDT
+	setcycle 123 Item_type exp
+	setcycle 123 Stimulus GHAUTCH
+	setcycle 123 Condition nonword
+	setcycle 123 Length 7
+	setcycle 123 Lg10SUBTLEX_US NA
+	setcycle 123 correct_response f
+	setcycle 124 Experiment LDT
+	setcycle 124 Item_type exp
+	setcycle 124 Stimulus STREMPT
+	setcycle 124 Condition nonword
+	setcycle 124 Length 7
+	setcycle 124 Lg10SUBTLEX_US NA
+	setcycle 124 correct_response f
+	setcycle 125 Experiment LDT
+	setcycle 125 Item_type exp
+	setcycle 125 Stimulus SPEAGUE
+	setcycle 125 Condition nonword
+	setcycle 125 Length 7
+	setcycle 125 Lg10SUBTLEX_US NA
+	setcycle 125 correct_response f
+	setcycle 126 Experiment LDT
+	setcycle 126 Item_type exp
+	setcycle 126 Stimulus THUICHE
+	setcycle 126 Condition nonword
+	setcycle 126 Length 7
+	setcycle 126 Lg10SUBTLEX_US NA
+	setcycle 126 correct_response f
+	setcycle 127 Experiment LDT
+	setcycle 127 Item_type exp
+	setcycle 127 Stimulus STAUGHT
+	setcycle 127 Condition nonword
+	setcycle 127 Length 7
+	setcycle 127 Lg10SUBTLEX_US NA
+	setcycle 127 correct_response f
+	setcycle 128 Experiment LDT
+	setcycle 128 Item_type exp
+	setcycle 128 Stimulus SHREMPT
+	setcycle 128 Condition nonword
+	setcycle 128 Length 7
+	setcycle 128 Lg10SUBTLEX_US NA
+	setcycle 128 correct_response f
+	setcycle 129 Experiment LDT
+	setcycle 129 Item_type exp
+	setcycle 129 Stimulus SPROUST
+	setcycle 129 Condition nonword
+	setcycle 129 Length 7
+	setcycle 129 Lg10SUBTLEX_US NA
+	setcycle 129 correct_response f
+	setcycle 130 Experiment LDT
+	setcycle 130 Item_type exp
+	setcycle 130 Stimulus STRARSH
+	setcycle 130 Condition nonword
+	setcycle 130 Length 7
+	setcycle 130 Lg10SUBTLEX_US NA
+	setcycle 130 correct_response f
+	setcycle 131 Experiment LDT
+	setcycle 131 Item_type exp
+	setcycle 131 Stimulus THRELSE
+	setcycle 131 Condition nonword
+	setcycle 131 Length 7
+	setcycle 131 Lg10SUBTLEX_US NA
+	setcycle 131 correct_response f
+	setcycle 132 Experiment LDT
+	setcycle 132 Item_type exp
+	setcycle 132 Stimulus SHREIGH
+	setcycle 132 Condition nonword
+	setcycle 132 Length 7
+	setcycle 132 Lg10SUBTLEX_US NA
+	setcycle 132 correct_response f
+	setcycle 133 Experiment LDT
+	setcycle 133 Item_type exp
+	setcycle 133 Stimulus STRURVE
+	setcycle 133 Condition nonword
+	setcycle 133 Length 7
+	setcycle 133 Lg10SUBTLEX_US NA
+	setcycle 133 correct_response f
+	setcycle 134 Experiment LDT
+	setcycle 134 Item_type exp
+	setcycle 134 Stimulus PLIRQUE
+	setcycle 134 Condition nonword
+	setcycle 134 Length 7
+	setcycle 134 Lg10SUBTLEX_US NA
+	setcycle 134 correct_response f
+	setcycle 135 Experiment LDT
+	setcycle 135 Item_type exp
+	setcycle 135 Stimulus THRIDGE
+	setcycle 135 Condition nonword
+	setcycle 135 Length 7
+	setcycle 135 Lg10SUBTLEX_US NA
+	setcycle 135 correct_response f
+	setcycle 136 Experiment LDT
+	setcycle 136 Item_type exp
+	setcycle 136 Stimulus SCREICH
+	setcycle 136 Condition nonword
+	setcycle 136 Length 7
+	setcycle 136 Lg10SUBTLEX_US NA
+	setcycle 136 correct_response f
+	setcycle 137 Experiment LDT
+	setcycle 137 Item_type exp
+	setcycle 137 Stimulus CHOUNGE
+	setcycle 137 Condition nonword
+	setcycle 137 Length 7
+	setcycle 137 Lg10SUBTLEX_US NA
+	setcycle 137 correct_response f
+	setcycle 138 Experiment LDT
+	setcycle 138 Item_type exp
+	setcycle 138 Stimulus SPRARGE
+	setcycle 138 Condition nonword
+	setcycle 138 Length 7
+	setcycle 138 Lg10SUBTLEX_US NA
+	setcycle 138 correct_response f
+	setcycle 139 Experiment LDT
+	setcycle 139 Item_type exp
+	setcycle 139 Stimulus PHLELD
+	setcycle 139 Condition nonword
+	setcycle 139 Length 6
+	setcycle 139 Lg10SUBTLEX_US NA
+	setcycle 139 correct_response f
+	setcycle 140 Experiment LDT
+	setcycle 140 Item_type exp
+	setcycle 140 Stimulus PLARSH
+	setcycle 140 Condition nonword
+	setcycle 140 Length 6
+	setcycle 140 Lg10SUBTLEX_US NA
+	setcycle 140 correct_response f
+	setcycle 141 Experiment LDT
+	setcycle 141 Item_type exp
+	setcycle 141 Stimulus TWAULT
+	setcycle 141 Condition nonword
+	setcycle 141 Length 6
+	setcycle 141 Lg10SUBTLEX_US NA
+	setcycle 141 correct_response f
+	setcycle 142 Experiment LDT
+	setcycle 142 Item_type exp
+	setcycle 142 Stimulus CLUISE
+	setcycle 142 Condition nonword
+	setcycle 142 Length 6
+	setcycle 142 Lg10SUBTLEX_US NA
+	setcycle 142 correct_response f
+	setcycle 143 Experiment LDT
+	setcycle 143 Item_type exp
+	setcycle 143 Stimulus SWURGE
+	setcycle 143 Condition nonword
+	setcycle 143 Length 6
+	setcycle 143 Lg10SUBTLEX_US NA
+	setcycle 143 correct_response f
+	setcycle 144 Experiment LDT
+	setcycle 144 Item_type exp
+	setcycle 144 Stimulus KNERGE
+	setcycle 144 Condition nonword
+	setcycle 144 Length 6
+	setcycle 144 Lg10SUBTLEX_US NA
+	setcycle 144 correct_response f
+	setcycle 145 Experiment LDT
+	setcycle 145 Item_type exp
+	setcycle 145 Stimulus MEATHE
+	setcycle 145 Condition nonword
+	setcycle 145 Length 6
+	setcycle 145 Lg10SUBTLEX_US NA
+	setcycle 145 correct_response f
+	setcycle 146 Experiment LDT
+	setcycle 146 Item_type exp
+	setcycle 146 Stimulus TRONGE
+	setcycle 146 Condition nonword
+	setcycle 146 Length 6
+	setcycle 146 Lg10SUBTLEX_US NA
+	setcycle 146 correct_response f
+	setcycle 147 Experiment LDT
+	setcycle 147 Item_type exp
+	setcycle 147 Stimulus CRALPH
+	setcycle 147 Condition nonword
+	setcycle 147 Length 6
+	setcycle 147 Lg10SUBTLEX_US NA
+	setcycle 147 correct_response f
+	setcycle 148 Experiment LDT
+	setcycle 148 Item_type exp
+	setcycle 148 Stimulus FLOATH
+	setcycle 148 Condition nonword
+	setcycle 148 Length 6
+	setcycle 148 Lg10SUBTLEX_US NA
+	setcycle 148 correct_response f
+	setcycle 149 Experiment LDT
+	setcycle 149 Item_type exp
+	setcycle 149 Stimulus SHRARM
+	setcycle 149 Condition nonword
+	setcycle 149 Length 6
+	setcycle 149 Lg10SUBTLEX_US NA
+	setcycle 149 correct_response f
+	setcycle 150 Experiment LDT
+	setcycle 150 Item_type exp
+	setcycle 150 Stimulus SCILGE
+	setcycle 150 Condition nonword
+	setcycle 150 Length 6
+	setcycle 150 Lg10SUBTLEX_US NA
+	setcycle 150 correct_response f
+	setcycle 151 Experiment LDT
+	setcycle 151 Item_type exp
+	setcycle 151 Stimulus SPLULL
+	setcycle 151 Condition nonword
+	setcycle 151 Length 6
+	setcycle 151 Lg10SUBTLEX_US NA
+	setcycle 151 correct_response f
+	setcycle 152 Experiment LDT
+	setcycle 152 Item_type exp
+	setcycle 152 Stimulus SCROCH
+	setcycle 152 Condition nonword
+	setcycle 152 Length 6
+	setcycle 152 Lg10SUBTLEX_US NA
+	setcycle 152 correct_response f
+	setcycle 153 Experiment LDT
+	setcycle 153 Item_type exp
+	setcycle 153 Stimulus DRAULT
+	setcycle 153 Condition nonword
+	setcycle 153 Length 6
+	setcycle 153 Lg10SUBTLEX_US NA
+	setcycle 153 correct_response f
+	setcycle 154 Experiment LDT
+	setcycle 154 Item_type exp
+	setcycle 154 Stimulus MAUCHE
+	setcycle 154 Condition nonword
+	setcycle 154 Length 6
+	setcycle 154 Lg10SUBTLEX_US NA
+	setcycle 154 correct_response f
+	setcycle 155 Experiment LDT
+	setcycle 155 Item_type exp
+	setcycle 155 Stimulus SNOPSE
+	setcycle 155 Condition nonword
+	setcycle 155 Length 6
+	setcycle 155 Lg10SUBTLEX_US NA
+	setcycle 155 correct_response f
+	setcycle 156 Experiment LDT
+	setcycle 156 Item_type exp
+	setcycle 156 Stimulus THREGG
+	setcycle 156 Condition nonword
+	setcycle 156 Length 6
+	setcycle 156 Lg10SUBTLEX_US NA
+	setcycle 156 correct_response f
+	setcycle 157 Experiment LDT
+	setcycle 157 Item_type exp
+	setcycle 157 Stimulus SPRAIF
+	setcycle 157 Condition nonword
+	setcycle 157 Length 6
+	setcycle 157 Lg10SUBTLEX_US NA
+	setcycle 157 correct_response f
+	setcycle 158 Experiment LDT
+	setcycle 158 Item_type exp
+	setcycle 158 Stimulus DWEASH
+	setcycle 158 Condition nonword
+	setcycle 158 Length 6
+	setcycle 158 Lg10SUBTLEX_US NA
+	setcycle 158 correct_response f
+	setcycle 159 Experiment LDT
+	setcycle 159 Item_type exp
+	setcycle 159 Stimulus SHATCH
+	setcycle 159 Condition nonword
+	setcycle 159 Length 6
+	setcycle 159 Lg10SUBTLEX_US NA
+	setcycle 159 correct_response f
+	setcycle 160 Experiment LDT
+	setcycle 160 Item_type exp
+	setcycle 160 Stimulus PRENCH
+	setcycle 160 Condition nonword
+	setcycle 160 Length 6
+	setcycle 160 Lg10SUBTLEX_US NA
+	setcycle 160 correct_response f
+	setcycle 161 Experiment LDT
+	setcycle 161 Item_type exp
+	setcycle 161 Stimulus TWIBE
+	setcycle 161 Condition nonword
+	setcycle 161 Length 5
+	setcycle 161 Lg10SUBTLEX_US NA
+	setcycle 161 correct_response f
+	setcycle 162 Experiment LDT
+	setcycle 162 Item_type exp
+	setcycle 162 Stimulus PLIVE
+	setcycle 162 Condition nonword
+	setcycle 162 Length 5
+	setcycle 162 Lg10SUBTLEX_US NA
+	setcycle 162 correct_response f
+	setcycle 163 Experiment LDT
+	setcycle 163 Item_type exp
+	setcycle 163 Stimulus CLAWL
+	setcycle 163 Condition nonword
+	setcycle 163 Length 5
+	setcycle 163 Lg10SUBTLEX_US NA
+	setcycle 163 correct_response f
+	setcycle 164 Experiment LDT
+	setcycle 164 Item_type exp
+	setcycle 164 Stimulus SHUZZ
+	setcycle 164 Condition nonword
+	setcycle 164 Length 5
+	setcycle 164 Lg10SUBTLEX_US NA
+	setcycle 164 correct_response f
+	setcycle 165 Experiment LDT
+	setcycle 165 Item_type exp
+	setcycle 165 Stimulus STEBE
+	setcycle 165 Condition nonword
+	setcycle 165 Length 5
+	setcycle 165 Lg10SUBTLEX_US NA
+	setcycle 165 correct_response f
+	setcycle 166 Experiment LDT
+	setcycle 166 Item_type exp
+	setcycle 166 Stimulus SKYTH
+	setcycle 166 Condition nonword
+	setcycle 166 Length 5
+	setcycle 166 Lg10SUBTLEX_US NA
+	setcycle 166 correct_response f
+	setcycle 167 Experiment LDT
+	setcycle 167 Item_type exp
+	setcycle 167 Stimulus CRARR
+	setcycle 167 Condition nonword
+	setcycle 167 Length 5
+	setcycle 167 Lg10SUBTLEX_US NA
+	setcycle 167 correct_response f
+	setcycle 168 Experiment LDT
+	setcycle 168 Item_type exp
+	setcycle 168 Stimulus GROST
+	setcycle 168 Condition nonword
+	setcycle 168 Length 5
+	setcycle 168 Lg10SUBTLEX_US NA
+	setcycle 168 correct_response f
+	setcycle 169 Experiment LDT
+	setcycle 169 Item_type exp
+	setcycle 169 Stimulus GLASH
+	setcycle 169 Condition nonword
+	setcycle 169 Length 5
+	setcycle 169 Lg10SUBTLEX_US NA
+	setcycle 169 correct_response f
+	setcycle 170 Experiment LDT
+	setcycle 170 Item_type exp
+	setcycle 170 Stimulus FLOID
+	setcycle 170 Condition nonword
+	setcycle 170 Length 5
+	setcycle 170 Lg10SUBTLEX_US NA
+	setcycle 170 correct_response f
+	setcycle 171 Experiment LDT
+	setcycle 171 Item_type exp
+	setcycle 171 Stimulus SKAUL
+	setcycle 171 Condition nonword
+	setcycle 171 Length 5
+	setcycle 171 Lg10SUBTLEX_US NA
+	setcycle 171 correct_response f
+	setcycle 172 Experiment LDT
+	setcycle 172 Item_type exp
+	setcycle 172 Stimulus KNUSE
+	setcycle 172 Condition nonword
+	setcycle 172 Length 5
+	setcycle 172 Lg10SUBTLEX_US NA
+	setcycle 172 correct_response f
+	setcycle 173 Experiment LDT
+	setcycle 173 Item_type exp
+	setcycle 173 Stimulus CHONE
+	setcycle 173 Condition nonword
+	setcycle 173 Length 5
+	setcycle 173 Lg10SUBTLEX_US NA
+	setcycle 173 correct_response f
+	setcycle 174 Experiment LDT
+	setcycle 174 Item_type exp
+	setcycle 174 Stimulus DROAP
+	setcycle 174 Condition nonword
+	setcycle 174 Length 5
+	setcycle 174 Lg10SUBTLEX_US NA
+	setcycle 174 correct_response f
+	setcycle 175 Experiment LDT
+	setcycle 175 Item_type exp
+	setcycle 175 Stimulus SLUME
+	setcycle 175 Condition nonword
+	setcycle 175 Length 5
+	setcycle 175 Lg10SUBTLEX_US NA
+	setcycle 175 correct_response f
+	setcycle 176 Experiment LDT
+	setcycle 176 Item_type exp
+	setcycle 176 Stimulus DRISP
+	setcycle 176 Condition nonword
+	setcycle 176 Length 5
+	setcycle 176 Lg10SUBTLEX_US NA
+	setcycle 176 correct_response f
+	setcycle 177 Experiment LDT
+	setcycle 177 Item_type exp
+	setcycle 177 Stimulus SLINT
+	setcycle 177 Condition nonword
+	setcycle 177 Length 5
+	setcycle 177 Lg10SUBTLEX_US NA
+	setcycle 177 correct_response f
+	setcycle 178 Experiment LDT
+	setcycle 178 Item_type exp
+	setcycle 178 Stimulus PRECT
+	setcycle 178 Condition nonword
+	setcycle 178 Length 5
+	setcycle 178 Lg10SUBTLEX_US NA
+	setcycle 178 correct_response f
+	setcycle 179 Experiment LDT
+	setcycle 179 Item_type exp
+	setcycle 179 Stimulus FREFT
+	setcycle 179 Condition nonword
+	setcycle 179 Length 5
+	setcycle 179 Lg10SUBTLEX_US NA
+	setcycle 179 correct_response f
+	constrain correct_response maxrep=3
+	run trial_sequence
+
+define sketchpad fixation
+	set duration 500
+	set description "Displays stimuli"
+	draw line color=white penwidth=3 show_if=True x1=-32 x2=32 y1=0 y2=0 z_index=0
+	draw line color="#ffffff" penwidth=3 show_if=True x1=0 x2=0 y1=-32 y2=32 z_index=0
+
+define sketchpad instructions
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="Welcome to this experiment.<br /><br />You will be presented with strings of letters on the screen. Your task is to decide whether they are existing English words or not.<br /><br />Please respond as quickly as possible:<br />Is it a real word? → Press J.<br />Is it not a real word? → Press F.<br /><br />If you are sure that the word exists, but you don't know its exact meaning, you may still press J. But if you are not sure it is an existing word, you should press F.<br /><br />First, you will complete a small practice run to help understand the task. Press the space bar to start." x=0 y=0 z_index=0
+
+define keyboard_response instructions_keyboard_response
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set allowed_responses space
+
+define logger logger
+	set description "Logs experimental data"
+	set auto_log yes
+
+define reset_feedback new_1_reset_feedback
+	set description "A very simple plug-in to reset feedback variables"
+
+define reset_feedback new_reset_feedback
+	set description "A very simple plug-in to reset feedback variables"
+
+define inline_script participants
+	set description "Executes Python code"
+	___run__
+	var.Participant = var.subject_nr
+	
+	# intialisiere die Variable "Block",
+	# setze sie auf null für practice items,
+	# danach wird diese die Experimentblöcke 1-6 zählen
+	var.Block = 0
+	__end__
+	set _prepare ""
+
+define loop practice_loop
+	set source_file ""
+	set source table
+	set repeat 1
+	set order random
+	set description "Repeatedly runs another item"
+	set cycles 10
+	set continuous no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 Experiment LDT
+	setcycle 0 Item_type prac
+	setcycle 0 Stimulus DISPOSAL
+	setcycle 0 Condition word
+	setcycle 0 Length 8
+	setcycle 0 Lg10SUBTLEX_US 2.399673721481038
+	setcycle 0 correct_response j
+	setcycle 1 Experiment LDT
+	setcycle 1 Item_type prac
+	setcycle 1 Stimulus GAMBLER
+	setcycle 1 Condition word
+	setcycle 1 Length 7
+	setcycle 1 Lg10SUBTLEX_US 2.3710678622717363
+	setcycle 1 correct_response j
+	setcycle 2 Experiment LDT
+	setcycle 2 Item_type prac
+	setcycle 2 Stimulus SELLER
+	setcycle 2 Condition word
+	setcycle 2 Length 6
+	setcycle 2 Lg10SUBTLEX_US 2.0530784434834195
+	setcycle 2 correct_response j
+	setcycle 3 Experiment LDT
+	setcycle 3 Item_type prac
+	setcycle 3 Stimulus MERGER
+	setcycle 3 Condition word
+	setcycle 3 Length 6
+	setcycle 3 Lg10SUBTLEX_US 2.307496037913213
+	setcycle 3 correct_response j
+	setcycle 4 Experiment LDT
+	setcycle 4 Item_type prac
+	setcycle 4 Stimulus SUTURE
+	setcycle 4 Condition word
+	setcycle 4 Length 6
+	setcycle 4 Lg10SUBTLEX_US 2.103803720955957
+	setcycle 4 correct_response j
+	setcycle 5 Experiment LDT
+	setcycle 5 Item_type prac
+	setcycle 5 Stimulus THROOTHE
+	setcycle 5 Condition nonword
+	setcycle 5 Length 8
+	setcycle 5 Lg10SUBTLEX_US NA
+	setcycle 5 correct_response f
+	setcycle 6 Experiment LDT
+	setcycle 6 Item_type prac
+	setcycle 6 Stimulus STRILGE
+	setcycle 6 Condition nonword
+	setcycle 6 Length 7
+	setcycle 6 Lg10SUBTLEX_US NA
+	setcycle 6 correct_response f
+	setcycle 7 Experiment LDT
+	setcycle 7 Item_type prac
+	setcycle 7 Stimulus WRERTH
+	setcycle 7 Condition nonword
+	setcycle 7 Length 6
+	setcycle 7 Lg10SUBTLEX_US NA
+	setcycle 7 correct_response f
+	setcycle 8 Experiment LDT
+	setcycle 8 Item_type prac
+	setcycle 8 Stimulus PHRAUB
+	setcycle 8 Condition nonword
+	setcycle 8 Length 6
+	setcycle 8 Lg10SUBTLEX_US NA
+	setcycle 8 correct_response f
+	setcycle 9 Experiment LDT
+	setcycle 9 Item_type prac
+	setcycle 9 Stimulus GHOLVE
+	setcycle 9 Condition nonword
+	setcycle 9 Length 6
+	setcycle 9 Lg10SUBTLEX_US NA
+	setcycle 9 correct_response f
+	run trial_sequence
+
+define inline_script reset_trial_counter
+	set description "Executes Python code"
+	___run__
+	exp.items["trial_sequence"].count = -1
+	
+	# Notiz: habe im Code was geändert, das Folgende gilt nicht mehr... # TODO: löschen
+	# setze die Variable Block auf 1 für den ersten Durchlauf
+	# var.Block = 1
+	__end__
+	set _prepare ""
+
+define sketchpad stimulus
+	set duration 0
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=60 html=yes show_if=True text="[Stimulus]" x=0 y=0 z_index=0
+
+define keyboard_response stimulus_keyboard_response
+	set timeout 2500
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set allowed_responses "j;f"
+
+define sequence trial_sequence
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run fixation True
+	run stimulus True
+	run stimulus_keyboard_response True
+	run variables True
+	run logger True
+	run breaking_sequence "[count_trial_sequence] = 30 or [count_trial_sequence] = 60 or [count_trial_sequence] = 90 or [count_trial_sequence] = 120 or [count_trial_sequence] = 150"
+
+define inline_script variables
+	set description "Executes Python code"
+	___run__
+	var.RT = var.response_time_stimulus_keyboard_response
+	var.Accuracy = var.correct
+	
+	# Feedback Bedingungen:
+	# Probanden mit geraden IDs -> kein Feedback
+	# Probanden mit ungeraden IDs -> Feedback
+	# "%" bedeutet "modulo" (Ganzzahlteilung)
+	# wenn die ProbandenID ganzzahl-geteilt durch 2 eine 0 ergibt,
+	# dann ist es eine gerade Zahl, also kein Feedback
+	# wenn die Ganzzahlteilung eine 1 ergibt, dann ist es eine
+	# ungerade Zahl, also Feedback
+	# Bonus: beim Programmieren heißt 1 "wahr"/True
+	# und 0 "falsch"/False, das ist also ein netter Trick :)
+	var.Feedback = int(var.Participant) % 2
+	
+	# erhöhe die Blockvariable nach jeder Runde um 1
+	# eine Runde besteht aus 30 items, das heißt immer wenn die Ganzzahl-
+	# teilung der bisherigen Items durch 30 null ergibt, erhöhen wir die
+	# Blockvariable um 1 (also bei 30, 60, 90, ...)
+	var.Block += 1 if exp.items["trial_sequence"].count % 30 == 0 else 0
+	__end__
+	set _prepare ""
+
