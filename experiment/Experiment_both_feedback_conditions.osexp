@@ -44,12 +44,12 @@ define keyboard_response break_keyboard_response
 define sketchpad break_no_feedback
 	set duration 0
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="End of block.<br /><br /><br /><br />Take a break until you feel ready to continue.<br /><br />Press the space bar to complete the rest of the experiment." x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="End of block.<br /><br /><br /><br />Take a break until you feel ready to continue.<br /><br />Press the space bar to proceed." x=0 y=0 z_index=0
 
 define sketchpad break_with_feedback
 	set duration 0
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="End of block.<br /><br />Your accuracy was [acc]%.<br /><br />Take a break until you feel ready to continue.<br /><br />Press the space bar to complete the rest of the experiment." x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=30 html=yes show_if=True text="End of block.<br /><br />Your accuracy was [acc]%.<br /><br />Take a break until you feel ready to continue.<br /><br />Press the space bar to proceed." x=0 y=0 z_index=0
 
 define sequence breaking_sequence
 	set flush_keyboard yes
