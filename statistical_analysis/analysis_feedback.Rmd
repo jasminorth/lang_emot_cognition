@@ -1,0 +1,643 @@
+---
+title: "Statistical Analysis: Feedback Processing"
+output: html_document
+date: "2026-08-13"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+
+# Preparation
+In this section, we load the packages required for the subsequent analyses.
+
+```{r}
+# Data manipulation
+library(tidyverse)
+library(tidyr)
+library(dplyr)
+
+# Descriptive statistics
+library(psych)
+
+# Visualization
+library(ggplot2)
+library(corrplot)
+
+# MIxed models
+library(lme4)
+library(lmerTest)
+
+# Estimated marginal means
+library (emmeans)
+```
+
+
+```{r}
+# Set fixed colours for our feedback conditions
+
+feedback_colour <- "cornflowerblue"
+control_colour <- "coral"
+
+feedback_colours <- c(
+  "Control" = control_colour,
+  "Feedback" = feedback_colour
+)
+```
+
+
+
+# Experimental Data
+
+## Loading the Dataset
+
+The experimental dataset containing reaction times and accuracy values is loaded from a CSV file.
+
+```{r}
+descr_df <- read_csv("Exp_longlist_merged_2026_07_02.csv", show_col_types = FALSE)
+# descr_df
+```
+
+
+## Descriptive Statistics
+
+Two main measures are analysed:
+
+- **Accuracy** (whether the response was correct)
+- **Reaction time (RT)** in milliseconds
+
+
+### Initial Inspection of the Data
+Before conducting statistical analyses, the dataset is filtered to include only experimental trials containing real words. This removes practice items and nonword trials.
+
+```{r}
+# Remove all practice items, remove all nonword trials
+pre_filtered_df <- subset(descr_df, Item_type == "exp" & Condition == "word")
+pre_filtered_df
+```
+
+### Participant-Level Summary Statistics
+
+To identify potential outliers or problematic participants, we compute the mean accuracy and mean reaction time for each participant.
+
+This allows us to detect:
+
+- participants with extremely low accuracy (indicating misunderstanding of the task)
+- participants with unusually slow responses
+
+A preliminary plot is used to visualize potential outliers.
+
+```{r participant_outliers, cache=TRUE}
+# Overall overview by participant
+describeBy(pre_filtered_df, group = pre_filtered_df$Participant)
+
+# Summary: mean accuracy and RT by participant
+means_by_participant <- pre_filtered_df %>%
+  group_by(Participant) %>%
+  summarise(
+    mean_RT = mean(RT, na.rm = TRUE),
+    mean_acc = mean(Accuracy, na.rm = TRUE)
+  )
+means_by_participant
+
+# Plot
+plot_outliers <- function(y_axis, filename, colour){
+  p <- ggplot(data = means_by_participant, aes(x = "", y = {{ y_axis }})) +
+  geom_boxplot(fill = colour, color = "black", alpha = 0.6) +
+  labs(
+    x = "",
+    y = "Mean by Participant"
+  ) +
+  theme_minimal()
+
+ggsave(
+  filename,
+  plot = last_plot(),
+  width = 7,
+  height = 5
+)
+
+p
+}
+
+plot_outliers(mean_RT, "average_RT_unfiltered.png", "grey70")
+plot_outliers(mean_acc, "average_acc_unfiltered.png", "grey70")
+```
+
+No participants are excluded because the participant-level descriptive statistics do not indicate problematic performance.
+
+## Feedback coding
+The feedback variable is coded as a factor with control as the reference category. This means that the model coefficients for Feedback represent the difference between the Feedback and Control conditions.
+
+```{r feedback_coding, cache=TRUE}
+filtered_df <- pre_filtered_df %>%
+  mutate(
+    Feedback = factor(
+      Feedback,
+      levels = c(0, 1),
+      labels = c("Control", "Feedback")
+    )
+  )
+
+filtered_df
+
+```
+
+
+
+
+### Reaction Time Filtering
+
+To remove implausible reaction times, a cutoff is applied.
+
+Only trials with reaction times between **200 ms and 2000 ms** are retained.
+
+This removes extremely fast responses (likely accidental key presses) and extremely slow responses that may reflect distractions or interruptions.
+
+```{r reaction_time_filtering, cache=TRUE}
+# Visualize the distribution of reaction times to see where to place the cutoff
+p <- ggplot(data = filtered_df, aes(x = "", y = RT)) +
+  geom_boxplot(fill = "grey70", color = "black", alpha = 0.6) +
+  labs(
+    x = "",
+    y = "Reaction Time"
+  ) +
+  theme_minimal()
+
+#ggsave(
+#  "RT_distribution.png",
+#  plot = last_plot(),
+#  width = 7,
+#  height = 5
+#)
+
+p
+
+
+
+# Apply cutoff
+post_filtered_df <- filtered_df %>%
+  filter(RT >= 200 & RT <= 2000)
+
+
+
+# Plot again to visualize the new distribution
+p <- ggplot(data = post_filtered_df, aes(x = "", y = RT)) +
+  geom_boxplot(fill = "grey70", color = "black", alpha = 0.6) +
+  labs(
+    x = "",
+    y = "Reaction Time"
+  ) +
+  theme_minimal()
+
+#ggsave(
+#  "RT_outlier.png",
+#  plot = last_plot(),
+#  width = 7,
+#  height = 5
+#)
+
+p
+
+```
+
+
+### Mean Accuracy and Reaction Time by Feedback Condition
+Next, mean accuracy and reaction time are computed for each feedback category:
+
+- 1: feedback
+- 0: control
+
+
+```{r mean_acc_RT_by_feedback, cache=TRUE}
+# Mean accuracy and reaction times by feedback condition
+means_by_feedback <- post_filtered_df %>%
+  group_by(Feedback) %>%
+  summarise(
+    mean_RT = mean(RT, na.rm = TRUE),
+    mean_acc = mean(Accuracy, na.rm = TRUE)
+  )
+means_by_feedback
+
+# Plot mean accuracies (barplots)
+p <- ggplot(
+  means_by_feedback,
+  aes(
+    x = Feedback,
+    y = mean_acc,
+    fill = Feedback
+  )
+) +
+  geom_col(
+    width = 0.7
+  ) +
+  scale_fill_manual(
+    values = feedback_colours
+  ) +
+  scale_x_discrete(
+    limits = c("Feedback", "Control")
+  ) +
+  labs(
+    x = "Feedback Condition",
+    y = "Mean Accuracy",
+    fill = "Feedback"
+  ) +
+  theme_minimal()
+
+ggsave(
+  "average_acc_per_feedback_barplot.png",
+  plot = p,
+  width = 7,
+  height = 5
+)
+
+p
+
+
+# Plot mean RTs (boxplots)
+p <- ggplot(
+  post_filtered_df,
+  aes(
+    x = Feedback,
+    y = RT,
+    fill = Feedback
+  )
+) +
+  geom_boxplot(
+    width = 0.7
+  ) +
+  scale_fill_manual(
+    values = feedback_colours
+  ) +
+  scale_x_discrete(
+    limits = c("Feedback", "Control")
+  ) +
+  labs(
+    x = "Feedback Condition",
+    y = "Reaction Time (ms)",
+    fill = "Feedback"
+  ) +
+  theme_minimal()
+
+ggsave(
+  "RT_per_feedback_boxplot.png",
+  plot = p,
+  width = 7,
+  height = 5
+)
+
+p
+```
+
+# Inferential Statistics
+To formally test the research questions, mixed-effects models are used.
+
+Mixed-effects models are appropriate for experimental data because they
+allow us to account for variability across both:
+
+- participants
+- stimuli
+
+
+## Data Loading and Preparation
+
+- Data loading: The full experimental dataset containing reaction times and accuracy values as well as participant data is loaded from a CSV file.
+- Filtering: everything that was removed from the above dataset needs to be removed here as well (practice items, nonwords, certain participants)
+- Variable coding: Before fitting the models, variables are converted to appropriate types (e.g., numeric or factor). The ordering of factor levels is also specified for interpretability.
+
+```{r}
+prepped_df <- post_filtered_df %>%
+  mutate(
+    Accuracy = as.numeric(Accuracy),
+    RT = as.numeric(RT),
+
+    Participant = factor(Participant),
+    Stimulus = factor(Stimulus),
+
+    Feedback = factor(
+      Feedback,
+      levels = c("Control", "Feedback")
+    ),
+
+    # Block_cat = factor(Block),           # tried to have the individual Blocks as a factorial variable but it does not work as well as having it continuous
+
+    Block_cont = as.numeric(Block),
+    anxiety_score = as.numeric(anxiety_score),
+    openness_to_experience = as.numeric(openness_to_experience),
+    conscientiousness = as.numeric(conscientiousness),
+    extraversion = as.numeric(extraversion),
+    agreeableness = as.numeric(agreeableness),
+    neuroticism = as.numeric(neuroticism)
+  )
+
+prepped_df
+```
+
+### Standardizing Continuous Predictors
+
+Continuous predictors are standardized (z-transformed). This improves model convergence and ensures that predictors are on comparable scales.
+The continuous individual-difference variables are standardized before entering them into the models. This makes the coefficients easier to compare and can improve model estimation.
+
+
+```{r}
+prepped_df <- prepped_df %>%
+  mutate(
+    anxiety_z = as.numeric(scale(anxiety_score)),
+    openness_z = as.numeric(scale(openness_to_experience)),
+    conscientiousness_z = as.numeric(scale(conscientiousness)),
+    extraversion_z = as.numeric(scale(extraversion)),
+    agreeableness_z = as.numeric(scale(agreeableness)),
+    neuroticism_z = as.numeric(scale(neuroticism)),
+  )
+prepped_df
+```
+
+
+## Accuracy Analysis
+
+Accuracy is analysed using a generalized linear mixed-effects model with a binomial distribution.
+
+The primary question is whether feedback affects accuracy. Block is included to examine whether performance changes over the course of the experiment, and the interactions between Feedback and the individual-difference variables test whether personality or anxiety moderates the feedback effect.
+
+The model includes:
+
+Fixed effects:
+
+- feedback
+- block (time effect of being given feedback)
+- each of the Big Five scores, plus the anxiety score
+
+
+Random effects:
+
+- random intercepts for participants
+- random intercepts for stimuli
+
+
+```{r ACC_mixed_model, cache=TRUE}
+acc_model <- glmer(
+  Accuracy ~
+    Feedback *
+    Block_cont +
+    anxiety_z +
+    Feedback:anxiety_z +
+    openness_z +
+    Feedback:openness_z +
+    conscientiousness_z +
+    Feedback:conscientiousness_z +
+    extraversion_z +
+    Feedback:extraversion_z +
+    agreeableness_z +
+    Feedback:agreeableness_z +
+    neuroticism_z +
+    Feedback:neuroticism_z +
+    (1 | Participant) +
+    (1 | Stimulus),
+  family = binomial,
+  data = prepped_df,
+  control = glmerControl(
+    optimizer = "bobyqa",
+    optCtrl = list(maxfun = 1e5)
+  )
+)
+
+summary(acc_model)
+
+```
+
+```{r}
+# Plot the model
+
+block_seq <- seq(
+  min(prepped_df$Block_cont, na.rm = TRUE),
+  max(prepped_df$Block_cont, na.rm = TRUE),
+  by = 0.1
+)
+
+# Estimated marginal means
+# Personality variables are held at their mean (0)
+emm <- emmeans(
+  acc_model,
+  ~ Feedback | Block_cont,
+  at = list(
+    Block_cont = block_seq,
+    anxiety_z = 0,
+    openness_z = 0,
+    conscientiousness_z = 0,
+    extraversion_z = 0,
+    agreeableness_z = 0,
+    neuroticism_z = 0
+  ),
+  type = "response"
+)
+
+# Convert to dataframe
+emm_df <- as.data.frame(emm)
+
+# Plot
+p <- ggplot(
+  emm_df,
+  aes(
+    x = Block_cont,
+    y = prob,
+    color = Feedback,
+    fill = Feedback
+  )
+) +
+  geom_line(linewidth = 1.2) +
+  geom_ribbon(
+    aes(
+      ymin = asymp.LCL,
+      ymax = asymp.UCL
+    ),
+    alpha = 0.2,
+    color = NA
+  ) +
+  scale_color_manual(
+    values = feedback_colours
+  ) +
+  scale_fill_manual(
+    values = feedback_colours
+  ) +
+  labs(
+    x = "Block",
+    y = "Predicted Accuracy",
+    color = "Feedback",
+    fill = "Feedback"
+  ) +
+  scale_x_continuous(
+    breaks = 1:6
+  ) +
+  scale_y_continuous(
+    limits = c(0, 1)
+  ) +
+  theme_minimal(base_size = 14)
+
+ggsave(
+  "acc_model_feedback_block.png",
+  plot = p,
+  width = 7,
+  height = 5
+)
+
+p
+```
+
+
+
+
+
+## Reaction Time Analysis
+
+Reaction times are analysed using a **linear mixed-effects model**.
+
+The primary question is whether feedback affects accuracy. Block is included to examine whether performance changes over the course of the experiment, and the interactions between Feedback and the individual-difference variables test whether personality or anxiety moderates the feedback effect.
+
+Only trials with correct responses are included, as incorrect trials may reflect different cognitive processes.
+
+The model includes:
+
+Fixed effects:
+
+- feedback
+- block (time effect of being given feedback)
+- each of the Big Five scores, plus the anxiety score
+
+
+Random effects:
+
+- random intercepts for participants
+- random intercepts for stimuli
+
+
+```{r RT_data}
+RT_df <- prepped_df %>%
+  filter(Accuracy == 1)
+
+RT_df
+
+```
+
+The model uses the same predictors as the accuracy model.
+
+
+```{r RT_mixed_model, cache=TRUE}
+RT_model <- lmer(
+  RT ~
+    Feedback *
+    Block_cont +
+    anxiety_z +
+    Feedback:anxiety_z +
+    openness_z +
+    Feedback:openness_z +
+    conscientiousness_z +
+    Feedback:conscientiousness_z +
+    extraversion_z +
+    Feedback:extraversion_z +
+    agreeableness_z +
+    Feedback:agreeableness_z +
+    neuroticism_z +
+    Feedback:neuroticism_z +
+    (1 | Participant) +
+    (1 | Stimulus),
+  data = RT_df
+)
+
+summary(RT_model)
+
+```
+
+```{r}
+# Plot the model
+# Block as a continuous predictor
+
+block_seq <- seq(
+  min(RT_df$Block_cont, na.rm = TRUE),
+  max(RT_df$Block_cont, na.rm = TRUE),
+  by = 0.1
+)
+
+# Estimated marginal means
+# Personality variables are held at their mean (0)
+emm <- emmeans(
+  RT_model,
+  ~ Feedback | Block_cont,
+  at = list(
+    Block_cont = block_seq,
+    anxiety_z = 0,
+    openness_z = 0,
+    conscientiousness_z = 0,
+    extraversion_z = 0,
+    agreeableness_z = 0,
+    neuroticism_z = 0
+  )
+)
+
+# Convert to dataframe
+emm_df <- as.data.frame(emm)
+
+# Plot
+p <- ggplot(
+  emm_df,
+  aes(
+    x = Block_cont,
+    y = emmean,
+    color = Feedback,
+    fill = Feedback
+  )
+) +
+  geom_line(linewidth = 1.2) +
+  geom_ribbon(
+    aes(
+      ymin = lower.CL,
+      ymax = upper.CL
+    ),
+    alpha = 0.2,
+    color = NA
+  ) +
+  scale_color_manual(
+    values = feedback_colours
+  ) +
+  scale_fill_manual(
+    values = feedback_colours
+  ) +
+  labs(
+    x = "Block",
+    y = "Predicted RT (ms)",
+    color = "Feedback",
+    fill = "Feedback"
+  ) +
+  scale_x_continuous(
+    breaks = 1:6
+  ) +
+  theme_minimal(base_size = 14)
+
+ggsave(
+  "RT_model_feedback_block.png",
+  plot = p,
+  width = 7,
+  height = 5
+)
+
+p
+```
+
+
+
+# Interpretation
+
+The results of the mixed-effects models are interpreted with respect to
+the research questions:
+
+1. Does summary accuracy feedback affect lexical decision performance, as reflected in reaction times and accuracy?
+2. Do Big Five personality traits and foreign language anxiety moderate the effect of feedback on performance?
+3. Does the effect of feedback change over the course of the experiment?
+
+The answers to these questions are based on the inferential statistical results reported above.
+
+

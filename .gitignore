@@ -2,10 +2,18 @@
 .venv/
 
 
-
+# Datasets that I am drawing from
 BRM-emot-submit.csv
 CogNet-v1.0.tsv
 SUBTLEXusfrequencyabove1.xls
-Code_und_Erklärungen_dazu.txt
 
-experiment/*.csv
+questionnaire.csv
+
+statistical_analysis/Experiment
+
+Hintergrunddaten_2026_07_02.xlsx
+SEK_merge.Rmd
+
+analysis_feedback_cache
+analysis_feedback_files
+.Rhistory
