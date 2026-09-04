@@ -34,9 +34,9 @@ Zu jedem dieser zwei Punkte erstellen wir auch einen Plot, um unsere Ergebnisse 
 
 ```{r}
 # Deutsche Plot-Einstellungen
-farben = c("darkolivegreen2", "darkorchid1")
+farben = c("blueviolet", "cornflowerblue")
 namen = c("Nonwords", "Wörter")
-farbe_wörter = c("darkorchid1")
+farbe_wörter = c("cornflowerblue")
 
 # Englische Plot-Einstellungen
 colours = c("darkolivegreen2", "darkorchid1")
@@ -85,7 +85,7 @@ t.test(Length ~ Condition, data = df)
 ```
 ### Plotten
 
-Ein hübscher Plot kommt immer gut. Hier kann man sehen, wie viele Wörter und wie viele Nicht-Wörter welche Länge haben.
+WIr erstellen noch ein paar Plots zur visuellen Aufbereitung. Hier kann man sehen, wie viele Wörter und wie viele Nicht-Wörter welche Länge haben.
 
 ##### Deutsch
 
